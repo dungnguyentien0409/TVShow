@@ -11,7 +11,14 @@ namespace DataAccessEF
 		{
 		}
 
-		public DbSet<Characteristic> Characteristic { get; set; }
+		public DbSet<Characteristic> Characteristics { get; set; }
+		public DbSet<Episode> Episodes { get; set; }
+		public DbSet<GenderItem> Genders { get; set; }
+		public DbSet<Location> Locations { get; set; }
+		public DbSet<Origin> Origins { get; set; }
+		public DbSet<SpeciesItem> Species { get; set; }
+		public DbSet<StatusItem> Statuses { get; set; }
+		public DbSet<TypeItem> Types { get; set; }
     }
 }
 
