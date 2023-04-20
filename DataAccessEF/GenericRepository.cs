@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Domain.Interfaces;
 
 namespace DataAccessEF

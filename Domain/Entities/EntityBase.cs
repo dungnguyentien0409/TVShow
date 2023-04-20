@@ -1,13 +1,14 @@
 ﻿using System;
 namespace Domain.Entities
 {
-	public abstract class EntityBase
+	public class EntityBase
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 		public DateTime Created { get; set; }
 
 		public EntityBase()
 		{
+			Id = Guid.NewGuid();
 			Created = DateTime.Now;
 		}
 	}

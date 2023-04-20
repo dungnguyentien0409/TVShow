@@ -8,12 +8,6 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
         public string Url { get; set; }
-
-        public Origin(string name, string url) : base()
-        {
-            Name = name;
-            Url = url;
-        }
     }
 }
 

@@ -7,11 +7,6 @@ namespace Domain.Entities
     public class TypeItem : EntityBase
     {
         public string Type { get; set; }
-
-        public TypeItem(string type) : base()
-        {
-            Type = type;
-        }
     }
 }
 

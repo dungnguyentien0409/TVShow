@@ -7,15 +7,10 @@ namespace Domain.Entities
     public class Episode : EntityBase
     {
         [ForeignKey("Characteristic")]
-        public int CharacteristicId { get; set; }
+        public Guid CharacteristicId { get; set; }
         public Characteristic Characteristic { get; set; }
         
         public string EpisodeUrl { get; set; }
-
-        public Episode(string episodeUrl) : base()
-        {
-            EpisodeUrl = episodeUrl;
-        }
     }
 }
 

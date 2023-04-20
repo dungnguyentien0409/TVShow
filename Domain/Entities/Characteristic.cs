@@ -10,27 +10,27 @@ namespace Domain.Entities
         public string Name { get; set; }
         
         [ForeignKey("StatusItem")]
-        public int? StatusId { get; set; }
+        public Guid? StatusId { get; set; }
         public StatusItem StatusItem { get; set; }
 
         [ForeignKey("SpeciesItem")]
-        public int? SpeciesId { get; set; }
+        public Guid? SpeciesId { get; set; }
         public SpeciesItem SpeciesItem { get; set; }
 
         [ForeignKey("TypeItem")]
-        public int? TypeId { get; set; }
+        public Guid? TypeId { get; set; }
         public TypeItem TypeItem { get; set; }
 
         [ForeignKey("GenderItem")]
-        public int? GenderId { get; set; }
+        public Guid? GenderId { get; set; }
         public GenderItem GenderItem { get; set; }
 
         [ForeignKey("Origin")]
-        public int? OriginId { get; set; }
+        public Guid? OriginId { get; set; }
         public Origin Origin { get; set; }
 
         [ForeignKey("Location")]
-        public int? LocationId { get; set; }
+        public Guid? LocationId { get; set; }
         public Location Location { get; set; }
         
         public string Image { get; set; }
@@ -38,14 +38,6 @@ namespace Domain.Entities
         public ICollection<Episode> Episodes { get; set; }
 
         public string Url { get; set; }
-
-        public Characteristic(string name, string image, string url) : base()
-        {
-            Name = name;
-            Image = image;
-            Url = url;
-            //Episodes = new List<Episode>();
-        }
     }
 }
 

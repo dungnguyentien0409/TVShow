@@ -3,8 +3,6 @@ namespace Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        ICharacteristicRepository Characteristic { get; }
-
         int Save();
     }
 }

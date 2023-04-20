@@ -9,6 +9,11 @@ namespace DataAccessEF.Repository
 		public StatusRepository(TVShowContext context) : base(context)
         {
 		}
+
+		public void RemoveAll()
+		{
+
+		}
 	}
 }
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessEF.Migrations
 {
     [DbContext(typeof(TVShowContext))]
-    [Migration("20230420174805_migrateion1")]
+    [Migration("20230420205305_migrateion1")]
     partial class migrateion1
     {
         /// <inheritdoc />
@@ -27,42 +27,40 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.Characteristic", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GenderId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("GenderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OriginId")
+                    b.Property<Guid?>("OriginId")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("SpeciesId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SpeciesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("StatusId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("TypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("TypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -87,14 +85,12 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.Episode", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CharacteristicId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CharacteristicId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -112,11 +108,9 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.GenderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -132,11 +126,9 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.Location", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -156,11 +148,9 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.Origin", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -180,11 +170,9 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.SpeciesItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -200,11 +188,9 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.StatusItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -220,11 +206,9 @@ namespace DataAccessEF.Migrations
 
             modelBuilder.Entity("Domain.Entities.TypeItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");

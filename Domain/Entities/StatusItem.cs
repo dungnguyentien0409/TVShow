@@ -7,11 +7,6 @@ namespace Domain.Entities
 	public class StatusItem : EntityBase
 	{
 		public string Status { get; set; }
-
-		public StatusItem(string status)
-		{
-			Status = status;
-		}
 	}
 }
 

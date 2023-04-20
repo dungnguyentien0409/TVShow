@@ -7,11 +7,6 @@ namespace Domain.Entities
     public class GenderItem : EntityBase
     {
         public string Gender { get; set; }
-
-        public GenderItem(string gender) : base()
-        {
-            Gender = gender;
-        }
     }
 }
 
