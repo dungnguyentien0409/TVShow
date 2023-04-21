@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using MinimalApi.Endpoint.Configurations.Extensions;
+using Services.Implementation;
+using Services.Interfaces;
 
 namespace TheWebApplication;
 
@@ -24,13 +26,16 @@ public class Program
         );
         builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
         builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+        builder.Services.AddAutoMapper(typeof(Services.MappingProfile).Assembly);
+
+        builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/Characteristic/Error");
         }
         app.UseStaticFiles();
 
@@ -40,7 +45,7 @@ public class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "{controller=Characteristic}/{action=Index}/{id?}");
 
         app.UseStaticFiles(new StaticFileOptions
         {

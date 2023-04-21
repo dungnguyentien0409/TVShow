@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
-using Domain.Entities;
 using ViewModels;
+using Dto;
 
 namespace TheWebApplication
 {
@@ -9,21 +9,16 @@ namespace TheWebApplication
 	{
 		public MappingProfile()
 		{
-			CreateMap<Location, LocationViewModel>().ReverseMap();
-			CreateMap<Origin, OriginViewModel>().ReverseMap();
-			CreateMap<Episode, EpisodeViewModel>()
+			CreateMap<LocationDto, LocationViewModel>().ReverseMap();
+			CreateMap<OriginDto, OriginViewModel>().ReverseMap();
+			CreateMap<EpisodeDto, EpisodeViewModel>()
 				.ForMember(dest => dest.EpisodeUrl, opt => opt.MapFrom(s => s.EpisodeUrl))
 				.ReverseMap();
 
-			CreateMap<Characteristic, CharacteristicViewModel>()
-				.ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.TypeItem.Type))
-				.ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.GenderItem.Gender))
-				.ForMember(dest => dest.Species, opt => opt.MapFrom(src => src.SpeciesItem.Species))
-				.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusItem.Status))
-				.ForMember(dest => dest.CreatedDisplay, opt => opt.MapFrom(src => src.Created.ToString("MM/dd/yyyy h:mm tt")))
+			CreateMap<CharacteristicDto, CharacteristicViewModel>()
 				.ForMember(dest => dest.Location, opt => opt.MapFrom(s => s.Location))
 				.ForMember(dest => dest.Origin, opt => opt.MapFrom(s => s.Origin))
-				.ForMember(dest => dest.Episode, opt => opt.MapFrom(s => s.Episodes.ToList()))
+				.ForMember(dest => dest.Episode, opt => opt.MapFrom(s => s.Episode))
 				.ReverseMap();
 		}
 	}

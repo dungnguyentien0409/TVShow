@@ -26,6 +26,7 @@ namespace DataAccessEF
         }
         public IEnumerable<T> GetAll()
         {
+
             return context.Set<T>().ToList();
         }
         public T? GetById(Guid? id)

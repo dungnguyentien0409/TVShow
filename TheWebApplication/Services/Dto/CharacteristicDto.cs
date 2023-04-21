@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ViewModels
+namespace Dto
 {
-	public class CharacteristicViewModel
+	public class CharacteristicDto
 	{
         public Guid Id { get; set; }
 
@@ -37,13 +37,13 @@ namespace ViewModels
         public IEnumerable<SelectListItem> Genders { get; set; }
 
         [Display(Name = "Location")]
-        public LocationViewModel Location { get; set; }
+        public LocationDto Location { get; set; }
 
         public Guid? LocationId { get; set; }
         public IEnumerable<SelectListItem> Locations { get; set; }
 
         [Display(Name = "Origin")]
-        public OriginViewModel Origin { get; set; }
+        public OriginDto Origin { get; set; }
 
         public Guid? OriginId { get; set; }
         public IEnumerable<SelectListItem> Origins { get; set; }
@@ -52,7 +52,7 @@ namespace ViewModels
         public string? Image { get; set; }
 
         [Display(Name = "Episode")]
-        public ICollection<EpisodeViewModel> Episode { get; set; }
+        public ICollection<EpisodeDto> Episode { get; set; }
         public string? EpisodeString { get; set; }
 
         [Display(Name = "Url")]
@@ -63,28 +63,28 @@ namespace ViewModels
         [Display(Name = "DateTime")]
         public string CreatedDisplay { get; set; }
 
-        public CharacteristicViewModel()
+        public CharacteristicDto()
         {
             Id = Guid.NewGuid();
             Locations = new List<SelectListItem>();
         }
 	}
 
-	public class LocationViewModel
+	public class LocationDto
 	{
         public Guid Id { get; set; }
 		public string Name { get; set; }
 		public string Url { get; set; }
 	}
 
-	public class OriginViewModel
+	public class OriginDto
 	{
         public Guid Id { get; set; }
         public string Name { get; set; }
 		public string Url { get; set; }
 	}
 
-    public class EpisodeViewModel
+    public class EpisodeDto
     {
         public string EpisodeUrl { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿var preUrl = '/Home/'
+﻿var preUrl = '/Characteristic/'
 
 $(".addNew").click(function (e) {
     var $buttonClicked = $(this);
