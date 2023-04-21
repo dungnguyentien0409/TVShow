@@ -8,6 +8,8 @@ namespace Dto
 	{
         public Guid Id { get; set; }
 
+        public int No { get; set; }
+
         [Required]
 		[Display(Name="Name")]
         public string Name { get; set; }

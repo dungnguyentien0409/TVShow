@@ -16,6 +16,7 @@ public class CharacteristicController : Controller
 {
     private readonly IMapper _mapper;
     private ICharacteristicService _charService;
+    private const int PAGE_SIZE = 5;
 
     public CharacteristicController(ICharacteristicService charService, IMapper mapper)
     {
@@ -25,17 +26,27 @@ public class CharacteristicController : Controller
 
     [HttpGet]
     [RateLimit(Seconds = 10)]
-    public IActionResult Index()
+    public IActionResult Index(int? pageIndex)
     {
-        var viewModel = new List<CharacteristicViewModel>();
+        return View();
+    }
 
-        var result = _charService.GetAllCharacteristic();
-        foreach(var dto in result)
+    [HttpGet]
+    [RateLimit(Seconds = 10)]
+    public IActionResult GetCharacteristicGrid(int? pageIndex)
+    {
+        var index = pageIndex.HasValue ? Math.Max(pageIndex.Value, 0) : 0;
+        var viewModel = new PagedResponse<List<CharacteristicViewModel>>();
+
+        var result = _charService.GetAllCharacteristic(index, PAGE_SIZE);
+        foreach (var dto in result.Results)
         {
-            viewModel.Add(_mapper.Map<CharacteristicViewModel>(dto));
+            viewModel.Results.Add(_mapper.Map<CharacteristicViewModel>(dto));
         }
 
-        return View(viewModel);
+        viewModel.TotalPage = result.TotalPage;
+        viewModel.PageIndex = result.PageIndex;
+        return PartialView("_PartialViewCharacteristic", viewModel);
     }
 
     [HttpGet]

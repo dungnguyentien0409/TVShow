@@ -8,6 +8,9 @@ namespace ViewModels
 	{
         public Guid Id { get; set; }
 
+        [Display(Name = "No")]
+        public int No { get; set; }
+
         [Required]
 		[Display(Name="Name")]
         public string Name { get; set; }

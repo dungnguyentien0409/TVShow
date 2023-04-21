@@ -1,4 +1,5 @@
 ﻿var preUrl = '/Characteristic/'
+var pageIndex = 0;
 
 $("#addNew").click(function (e) {
     var $buttonClicked = $(this);
@@ -28,6 +29,41 @@ $("body").click(function (e) {
         $('#myModal').modal('hide')
     }
 });
+
+function movePage(direction) {
+    totalPage = $("#TotalPage").val();
+    pageIndex += direction;
+
+    debugger;
+    if (pageIndex == 0 && direction == 0) {
+        //init
+    }
+    else if (pageIndex < 0) {
+        pageIndex = 0;
+        return;
+    }
+    else if (pageIndex >= totalPage) {
+        pageIndex = totalPage - 1;
+        return;
+    }
+
+    loadCharGrid(pageIndex);
+}
+
+function loadCharGrid(pageIndex) {
+    $.ajax({
+        type: "GET",
+        url: preUrl + "GetCharacteristicGrid",
+        data: { "PageIndex": pageIndex },
+        datatype: "json",
+        success: function (data) {
+            $('#charGrid').html(data);
+        },
+        error: function () {
+            alert("Dynamic content load failed.");
+        }
+    });
+}
 
 function displayRequiredLabel() {
     $('input[type=text]').each(function () {

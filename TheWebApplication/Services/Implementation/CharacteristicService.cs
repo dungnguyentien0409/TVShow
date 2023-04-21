@@ -23,12 +23,21 @@ namespace Services.Implementation
 			_mapper = mapper;
 		}
 
-        public List<CharacteristicDto> GetAllCharacteristic() {
+        public PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(int pageIndex, int pageSize) {
             var results = new List<CharacteristicDto>();
 
-            var response = _unitOfWork.Characteristic.GetAll().ToList();
-            foreach (var item in response)
+            var totalPage = _unitOfWork.Characteristic.GetAll().Count() / pageSize + 1;
+            var response = _unitOfWork.Characteristic
+                .GetAll()
+                .OrderBy(o => o.Id)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
+                .ToList();
+            var currentItem = pageIndex * pageSize + response.Count();
+
+            for (var i = 0; i < response.Count; i++)
             {
+                var item = response[i];
                 item.StatusItem = _unitOfWork.Status.GetByIdOrDefault(item.StatusId);
                 item.TypeItem = _unitOfWork.Type.GetByIdOrDefault(item.TypeId);
                 item.SpeciesItem = _unitOfWork.Species.GetByIdOrDefault(item.SpeciesId);
@@ -38,10 +47,16 @@ namespace Services.Implementation
                 item.Origin = _unitOfWork.Origin.GetByIdOrDefault(item.OriginId);
 
                 var dto = _mapper.Map<CharacteristicDto>(item);
+                dto.No = pageIndex * pageSize + i + 1;
                 results.Add(dto);
             }
 
-            return results;
+            return new PagedResponse<List<CharacteristicDto>>()
+            {
+                Results = results,
+                TotalPage = totalPage,
+                PageIndex = pageIndex,
+            };
         }
 
         public CharacteristicDto AddNew()
