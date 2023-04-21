@@ -1,6 +1,6 @@
 ﻿var preUrl = '/Characteristic/'
 
-$(".addNew").click(function (e) {
+$("#addNew").click(function (e) {
     var $buttonClicked = $(this);
     var id = $buttonClicked.attr('data-id');
     var options = { "backdrop": "static", keyboard: true };
