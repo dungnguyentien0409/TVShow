@@ -7,9 +7,10 @@ namespace Services.Interfaces
 {
 	public interface ICharacteristicService
 	{
-        PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(int pageIndex, int pageSize);
+        PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(Guid? locationId, int pageIndex, int pageSize);
 		CharacteristicDto AddNew();
 		bool Create(CharacteristicDto dto);
+		List<LocationDto> GetAllLocations();
 	}
 }
 

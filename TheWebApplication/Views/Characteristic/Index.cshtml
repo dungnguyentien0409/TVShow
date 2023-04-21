@@ -1,4 +1,5 @@
 ﻿@using ViewModels;
+@model LocationsViewModel;
 
 @{
     //ViewData["Title"] = "Home Page";
@@ -9,10 +10,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 }
 
-<div class="right-align" style="padding: 10px;">
-    <button id="addNew" class="button-style">Add New Characteristic</button>
+<div class="row">
+    <div class="col-9"></div>
+    <div class="col-3 right-align">
+        <button id="addNew" class="button-style">Add New Characteristic</button>
+    </div>
 </div>
 
+<div class="row">
+    <div class="col-2">
+        @Html.LabelFor(m => m.LocationId)
+    </div>
+    <div class="col-5">
+        @Html.DropDownListFor(m => m.LocationId, Model.Locations, "-- Select --", new { @class = "form-control, fit-content", @onchange="selectLocation(this.value)" })
+    </div>
+</div>
 <div id="charGrid" class="row"></div>
 
 <div class="right-align">

@@ -23,12 +23,17 @@ namespace Services.Implementation
 			_mapper = mapper;
 		}
 
-        public PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(int pageIndex, int pageSize) {
+        public PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(Guid? locationId, int pageIndex, int pageSize) {
             var results = new List<CharacteristicDto>();
+            var query = _unitOfWork.Characteristic.GetAll();
 
-            var totalPage = _unitOfWork.Characteristic.GetAll().Count() / pageSize + 1;
-            var response = _unitOfWork.Characteristic
-                .GetAll()
+            if (locationId.HasValue)
+            {
+                query = query.Where(w => w.LocationId == locationId);
+            }
+
+            var totalPage = query.Count() / pageSize + 1;
+            var response = query
                 .OrderBy(o => o.Id)
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize)
@@ -127,6 +132,19 @@ namespace Services.Implementation
                 _logger.LogError("Error when inserting new characteristic", ex);
                 return false;
             }
+        }
+
+        public List<LocationDto> GetAllLocations()
+        {
+            var res = new List<LocationDto>();
+
+            var response = _unitOfWork.Location.GetAll().ToList();
+            foreach(var item in response)
+            {
+                res.Add(_mapper.Map<LocationDto>(item));
+            }
+
+            return res;
         }
     }
 }

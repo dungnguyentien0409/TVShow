@@ -72,23 +72,6 @@ namespace Dto
         }
 	}
 
-	public class LocationDto
-	{
-        public Guid Id { get; set; }
-		public string Name { get; set; }
-		public string Url { get; set; }
-	}
-
-	public class OriginDto
-	{
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-		public string Url { get; set; }
-	}
-
-    public class EpisodeDto
-    {
-        public string EpisodeUrl { get; set; }
-    }
+    
 }
 

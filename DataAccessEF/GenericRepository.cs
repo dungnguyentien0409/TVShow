@@ -24,10 +24,10 @@ namespace DataAccessEF
         {
             return context.Set<T>().Where(expression);
         }
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
 
-            return context.Set<T>().ToList();
+            return context.Set<T>();
         }
         public T? GetById(Guid? id)
         {

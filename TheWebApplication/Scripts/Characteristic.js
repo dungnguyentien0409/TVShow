@@ -1,5 +1,6 @@
 ﻿var preUrl = '/Characteristic/'
 var pageIndex = 0;
+var locationId = "";
 
 $("#addNew").click(function (e) {
     var $buttonClicked = $(this);
@@ -30,11 +31,18 @@ $("body").click(function (e) {
     }
 });
 
+function selectLocation(selectedLocationId) {
+    locationId = selectedLocationId;
+
+    pageIndex = 0;
+    $("#TotalPage").val(0);
+    movePage(0);
+}
+
 function movePage(direction) {
     totalPage = $("#TotalPage").val();
     pageIndex += direction;
 
-    debugger;
     if (pageIndex == 0 && direction == 0) {
         //init
     }
@@ -52,10 +60,13 @@ function movePage(direction) {
 
 function loadCharGrid(pageIndex) {
     $.ajax({
-        type: "GET",
-        url: preUrl + "GetCharacteristicGrid",
-        data: { "PageIndex": pageIndex },
+        type: "POST",
         datatype: "json",
+        url: preUrl + "GetCharacteristicGrid",
+        data: {
+            "LocationId": locationId,
+            "PageIndex": pageIndex
+        },
         success: function (data) {
             $('#charGrid').html(data);
         },
@@ -112,6 +123,9 @@ function submitDetailsForm() {
             if (data == true) {
                 $('#myModal').modal('hide');
                 alert("New characteristic has been created!")
+
+                movePage(0);
+                pageIndex = 0;
             }
             else {
                 alert("Error happened when inserting new characteristic");

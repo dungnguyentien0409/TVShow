@@ -28,17 +28,29 @@ public class CharacteristicController : Controller
     [RateLimit(Seconds = 10)]
     public IActionResult Index(int? pageIndex)
     {
-        return View();
+        var locations = _charService.GetAllLocations();
+        var viewModel = new LocationsViewModel();
+
+        foreach(var location in locations)
+        {
+            viewModel.Locations.Add(new SelectListItem()
+            {
+                Text = location.Name,
+                Value = location.Id.ToString()
+            });
+        }
+
+        return View(viewModel);
     }
 
-    [HttpGet]
+    [HttpPost]
     [RateLimit(Seconds = 10)]
-    public IActionResult GetCharacteristicGrid(int? pageIndex)
+    public IActionResult GetCharacteristicGrid(CharacteristicGridViewModel request)
     {
-        var index = pageIndex.HasValue ? Math.Max(pageIndex.Value, 0) : 0;
+        var index = request.PageIndex.HasValue ? Math.Max(request.PageIndex.Value, 0) : 0;
         var viewModel = new PagedResponse<List<CharacteristicViewModel>>();
 
-        var result = _charService.GetAllCharacteristic(index, PAGE_SIZE);
+        var result = _charService.GetAllCharacteristic(request.LocationId, index, PAGE_SIZE);
         foreach (var dto in result.Results)
         {
             viewModel.Results.Add(_mapper.Map<CharacteristicViewModel>(dto));
