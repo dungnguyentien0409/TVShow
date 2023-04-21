@@ -28,9 +28,17 @@ namespace DataAccessEF
         {
             return context.Set<T>().ToList();
         }
-        public T? GetById(int id)
+        public T? GetById(Guid? id)
         {
             return context.Set<T>().Find(id);
+        }
+        public T GetByIdOrDefault(Guid? id)
+        {
+            if (id == null) return Activator.CreateInstance<T>();
+
+            var item = context.Set<T>().Find(id);
+
+            return item != null ? item : Activator.CreateInstance<T>();
         }
         public void Remove(T entity)
         {

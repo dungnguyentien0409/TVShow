@@ -5,6 +5,7 @@ namespace Domain.Interfaces
 {
 	public interface IEpisodeRepository : IGenericRepository<Episode>
 	{
-	}
+        IEnumerable<Episode> GetByCharacteristicId(Guid charId);
+    }
 }
 

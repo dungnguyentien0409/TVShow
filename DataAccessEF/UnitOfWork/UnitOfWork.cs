@@ -8,7 +8,7 @@ namespace DataAccessEF.UnitOfWork
 	{
 		private TVShowContext context;
 
-		public ICharacteristicRepository Characteristic { get; }
+        public ICharacteristicRepository Characteristic { get; }
         public IEpisodeRepository Episode { get; }
         public IGenderRepository Gender { get; }
         public ILocationRepository Location { get; }

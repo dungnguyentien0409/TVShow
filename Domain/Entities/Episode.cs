@@ -8,7 +8,7 @@ namespace Domain.Entities
     {
         [ForeignKey("Characteristic")]
         public Guid CharacteristicId { get; set; }
-        public Characteristic Characteristic { get; set; }
+        public virtual Characteristic Characteristic { get; set; }
         
         public string EpisodeUrl { get; set; }
     }

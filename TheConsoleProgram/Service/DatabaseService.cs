@@ -61,15 +61,17 @@ namespace Service
 
         private void InsertEpisode(List<string> episodeUrls, Guid charId)
         {
+            var episodeItems = new List<Entities.Episode>();
             foreach(var url in episodeUrls)
             {
                 var episodeItem = new Entities.Episode();
                 episodeItem.CharacteristicId = charId;
                 episodeItem.EpisodeUrl = url;
 
-                _unitOfWork.Episode.Add(episodeItem);
+                episodeItems.Add(episodeItem);
             }
 
+            _unitOfWork.Episode.AddRange(episodeItems);
             _unitOfWork.Save();
         }
 

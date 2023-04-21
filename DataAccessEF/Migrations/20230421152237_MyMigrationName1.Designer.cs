@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessEF.Migrations
 {
     [DbContext(typeof(TVShowContext))]
-    [Migration("20230420205305_migrateion1")]
-    partial class migrateion1
+    [Migration("20230421152237_MyMigrationName1")]
+    partial class MyMigrationName1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
