@@ -85,6 +85,8 @@ public class HomeController : Controller
                 Text = s.Name,
                 Value = s.Id.ToString()
             });
+        viewModel.Url = "";
+        viewModel.Image = "";
 
         return PartialView("_PartialViewAddNew", viewModel);
     }
@@ -95,6 +97,12 @@ public class HomeController : Controller
         try
         {
             var item = _mapper.Map<Entities.Characteristic>(viewModel);
+            item.GenderItem =  null;
+            item.SpeciesItem = null;
+            item.Location =  null;
+            item.Origin = null;
+            item.TypeItem =  null;
+            item.StatusItem = null;
 
             _unitOfWork.Characteristic.Add(item);
             _unitOfWork.Save();

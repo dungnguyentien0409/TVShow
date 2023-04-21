@@ -15,38 +15,37 @@ namespace ViewModels
 		[Display(Name="Status")]
         public string Status { get; set; }
 
-        public Guid StatusId { get; set; }
+        public Guid? StatusId { get; set; }
         public IEnumerable<SelectListItem> Statuses { get; set; }
 
 		[Display(Name="Species")]
 		public string Species { get; set; }
 
-        public Guid SpeciesId { get; set; }
+        public Guid? SpeciesId { get; set; }
         public IEnumerable<SelectListItem> Specieses { get; set; }
 
         [Display(Name = "Type")]
         public string Type { get; set; }
 
-        public Guid TypeId { get; set; }
+        public Guid? TypeId { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
 
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        public Guid GenderId { get; set; }
+        public Guid? GenderId { get; set; }
         public IEnumerable<SelectListItem> Genders { get; set; }
 
         [Display(Name = "Location")]
         public LocationViewModel Location { get; set; }
 
-        public Guid LocationId { get; set; }
+        public Guid? LocationId { get; set; }
         public IEnumerable<SelectListItem> Locations { get; set; }
 
         [Display(Name = "Origin")]
         public OriginViewModel Origin { get; set; }
 
-        public Guid OriginId
-        { get; set; }
+        public Guid? OriginId { get; set; }
         public IEnumerable<SelectListItem> Origins { get; set; }
 
         [Display(Name = "Image")]

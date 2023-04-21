@@ -35,11 +35,9 @@ namespace DataAccessEF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("LocationId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -47,7 +45,6 @@ namespace DataAccessEF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("OriginId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("SpeciesId")
@@ -60,7 +57,6 @@ namespace DataAccessEF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -227,15 +223,11 @@ namespace DataAccessEF.Migrations
 
                     b.HasOne("Domain.Entities.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("Domain.Entities.Origin", "Origin")
                         .WithMany()
-                        .HasForeignKey("OriginId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OriginId");
 
                     b.HasOne("Domain.Entities.SpeciesItem", "SpeciesItem")
                         .WithMany()
