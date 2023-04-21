@@ -1,6 +1,6 @@
 ﻿var preUrl = '/Characteristic/'
 var pageIndex = 0;
-var locationId = "";
+var locationId = "00000000-0000-0000-0000-000000000000";
 
 $("#addNew").click(function (e) {
     var $buttonClicked = $(this);
@@ -70,7 +70,9 @@ function loadCharGrid(pageIndex) {
         success: function (data) {
             $('#charGrid').html(data);
         },
-        error: function () {
+        error: function (e) {
+            debugger;
+            console.log(e);
             alert("Dynamic content load failed.");
         }
     });

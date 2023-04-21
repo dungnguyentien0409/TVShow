@@ -12,7 +12,17 @@ namespace ViewModels
 
 		public LocationsViewModel()
 		{
-			Locations = new List<SelectListItem>();
+			Locations = new List<SelectListItem>() {
+				new SelectListItem()
+				{
+					Text = "--Select--",
+					Value = Guid.Empty.ToString()
+				},
+				new SelectListItem()
+				{
+					Text = "null"
+				}
+			};
 		}
 	}
 }

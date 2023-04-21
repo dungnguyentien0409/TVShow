@@ -27,7 +27,7 @@ namespace Services.Implementation
             var results = new List<CharacteristicDto>();
             var query = _unitOfWork.Characteristic.GetAll();
 
-            if (locationId.HasValue)
+            if (locationId != Guid.Empty)
             {
                 query = query.Where(w => w.LocationId == locationId);
             }

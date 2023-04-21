@@ -22,7 +22,7 @@
         @Html.LabelFor(m => m.LocationId)
     </div>
     <div class="col-5">
-        @Html.DropDownListFor(m => m.LocationId, Model.Locations, "-- Select --", new { @class = "form-control, fit-content", @onchange="selectLocation(this.value)" })
+        @Html.DropDownListFor(m => m.LocationId, Model.Locations, new { @class = "form-control, fit-content", @onchange="selectLocation(this.value)" })
     </div>
 </div>
 <div id="charGrid" class="row"></div>
@@ -50,7 +50,7 @@
     <script src="../../Scripts/Characteristic.js"></script>
     <script>
         (function () {
-            movePage(0);
+            movePage(0, locationId);
         })();
     </script>
 }

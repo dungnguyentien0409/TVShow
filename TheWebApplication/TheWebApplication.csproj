@@ -15,6 +15,7 @@
     <None Remove="Services\Interfaces\" />
     <None Remove="Services\Implementation\" />
     <None Remove="Services\Dto\" />
+    <None Remove="Cache\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Middleware\" />
@@ -24,6 +25,7 @@
     <Folder Include="Services\Interfaces\" />
     <Folder Include="Services\Implementation\" />
     <Folder Include="Services\Dto\" />
+    <Folder Include="Cache\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

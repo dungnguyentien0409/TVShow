@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Entities = Domain.Entities;
 using Services.Interfaces;
 using Dto;
+using Microsoft.AspNetCore.RateLimiting;
+using Middleware;
 
 namespace TheWebApplication.Controllers;
 
@@ -25,7 +27,6 @@ public class CharacteristicController : Controller
     }
 
     [HttpGet]
-    [RateLimit(Seconds = 10)]
     public IActionResult Index(int? pageIndex)
     {
         var locations = _charService.GetAllLocations();
@@ -44,7 +45,8 @@ public class CharacteristicController : Controller
     }
 
     [HttpPost]
-    [RateLimit(Seconds = 10)]
+    [AddHeader("from-database", "true")]
+    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 0)]
     public IActionResult GetCharacteristicGrid(CharacteristicGridViewModel request)
     {
         var index = request.PageIndex.HasValue ? Math.Max(request.PageIndex.Value, 0) : 0;
@@ -71,6 +73,7 @@ public class CharacteristicController : Controller
     }
 
     [HttpPost]
+    [RateLimiting(Name = "GetCharacteristicGrid", IsCreated = true)]
     public IActionResult CreateCharacteristic(CharacteristicViewModel viewModel)
     {
         var charDto = _mapper.Map<CharacteristicDto>(viewModel);

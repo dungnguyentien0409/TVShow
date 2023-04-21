@@ -1,7 +1,11 @@
-﻿using DataAccessEF;
+﻿using System.Threading.RateLimiting;
+using Cache;
+using DataAccessEF;
 using DataAccessEF.UnitOfWork;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using MinimalApi.Endpoint.Configurations.Extensions;
@@ -29,6 +33,7 @@ public class Program
         builder.Services.AddAutoMapper(typeof(Services.MappingProfile).Assembly);
 
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
+        builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();
 
         var app = builder.Build();
 
@@ -54,12 +59,12 @@ public class Program
             RequestPath = "/Styles"
         });
         app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), "Scripts")),
-            RequestPath = "/Scripts"
-        }
-);
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Scripts")),
+                RequestPath = "/Scripts"
+            }
+        );
 
         app.Run();
     }
