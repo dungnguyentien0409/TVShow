@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Domain.Entities
 {
-	public class EntityBase
+	public abstract class EntityBase
 	{
 		public Guid Id { get; set; }
 		public DateTime Created { get; set; }

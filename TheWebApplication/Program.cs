@@ -1,4 +1,5 @@
 ﻿using System.Threading.RateLimiting;
+using AutoMapper;
 using Cache;
 using DataAccessEF;
 using DataAccessEF.UnitOfWork;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using MinimalApi.Endpoint.Configurations.Extensions;
+using Services;
 using Services.Implementation;
 using Services.Interfaces;
 
@@ -29,8 +31,15 @@ public class Program
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         );
         builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-        builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-        builder.Services.AddAutoMapper(typeof(Services.MappingProfile).Assembly);
+
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new EntitiesToDtoMappingProfile());
+            mc.AddProfile(new DtoToViewModelMappingProfile());
+        });
+
+        IMapper mapper = mapperConfig.CreateMapper();
+        builder.Services.AddSingleton(mapper);
 
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
         builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();

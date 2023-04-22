@@ -27,9 +27,8 @@ namespace DataAccessEF
         {
             return context.Set<T>().Where(expression);
         }
-        public IQueryable<T> GetAll()
+        public IQueryable<T> Query()
         {
-
             return context.Set<T>();
         }
         public T? GetById(Guid? id)

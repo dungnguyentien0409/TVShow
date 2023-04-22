@@ -7,8 +7,7 @@ namespace Domain.Interfaces
     {
         T? GetById(Guid? id);
         T GetByIdOrDefault(Guid? id);
-        IQueryable<T> GetAll();
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+        IQueryable<T> Query();
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
         void Remove(T entity);

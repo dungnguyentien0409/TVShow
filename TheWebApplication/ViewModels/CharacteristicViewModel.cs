@@ -8,88 +8,92 @@ namespace ViewModels
 	{
         public Guid Id { get; set; }
 
-        [Display(Name = "No")]
         public int No { get; set; }
 
         [Required]
-		[Display(Name="Name")]
         public string Name { get; set; }
 
-		[Display(Name="Status")]
-        public string Status { get; set; }
-
+        
         public Guid? StatusId { get; set; }
+        public StatusItemViewModel? StatusItem { get; set; }
+        public string StatusDisplay
+        {
+            get
+            {
+                return StatusItem != null ? StatusItem.Status : string.Empty;
+            }
+        }
         public IEnumerable<SelectListItem> Statuses { get; set; }
 
-		[Display(Name="Species")]
-		public string Species { get; set; }
-
         public Guid? SpeciesId { get; set; }
+        public SpeciesItemViewModel? SpeciesItem { get; set; }
+        public string SpeciesDisplay
+        {
+            get
+            {
+                return SpeciesItem != null ? SpeciesItem.Species : string.Empty;
+            }
+        }
         public IEnumerable<SelectListItem> Specieses { get; set; }
 
-        [Display(Name = "Type")]
-        public string Type { get; set; }
-
         public Guid? TypeId { get; set; }
+        public TypeItemViewModel? TypeItem { get; set; }
+        public string TypeDisplay
+        {
+            get
+            {
+                return TypeItem != null ? TypeItem.Type : string.Empty;
+            }
+        }
         public IEnumerable<SelectListItem> Types { get; set; }
 
-        [Display(Name = "Gender")]
-        public string Gender { get; set; }
-
         public Guid? GenderId { get; set; }
+        public GenderItemViewModel? GenderItem { get; set; }
+        public string GenderDisplay
+        {
+            get
+            {
+                return GenderItem != null ? GenderItem.Gender : string.Empty;
+            }
+        }
         public IEnumerable<SelectListItem> Genders { get; set; }
 
-        [Display(Name = "Location")]
-        public LocationViewModel Location { get; set; }
-
         public Guid? LocationId { get; set; }
+        public LocationViewModel? LocationItem { get; set; }
+        public string LocationDisplay
+        {
+            get
+            {
+                return LocationItem != null ? LocationItem.Name : string.Empty;
+            }
+        }
         public IEnumerable<SelectListItem> Locations { get; set; }
 
-        [Display(Name = "Origin")]
-        public OriginViewModel Origin { get; set; }
-
         public Guid? OriginId { get; set; }
+        public OriginItemViewModel? OriginItem { get; set; }
+        public string OriginDisplay
+        {
+            get
+            {
+                return OriginItem != null ? OriginItem.Name : string.Empty;
+            }
+        }
         public IEnumerable<SelectListItem> Origins { get; set; }
 
-        [Display(Name = "Image")]
         public string? Image { get; set; }
 
-        [Display(Name = "Episode")]
         public ICollection<EpisodeViewModel> Episode { get; set; }
         public string? EpisodeString { get; set; }
 
-        [Display(Name = "Url")]
         public string? Url { get; set; }
 
         public DateTime Created { get; set; }
-
-        [Display(Name = "DateTime")]
-        public string CreatedDisplay { get; set; }
-
-        public CharacteristicViewModel()
-        {
-            Id = Guid.NewGuid();
-            Locations = new List<SelectListItem>();
+        public string CreatedDisplay {
+            get
+            {
+                return Created.ToString("MM/dd/yyyy h:mm tt");
+            }
         }
-	}
-
-	public class LocationViewModel
-	{
-        public Guid Id { get; set; }
-		public string Name { get; set; }
-		public string Url { get; set; }
-	}
-
-	public class OriginViewModel
-	{
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-		public string Url { get; set; }
-	}
-
-    public class EpisodeViewModel
-    {
-        public string EpisodeUrl { get; set; }
-    }
+	} 
 }
 

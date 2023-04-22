@@ -10,7 +10,7 @@ namespace Services.Interfaces
         PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(Guid? locationId, int pageIndex, int pageSize);
 		CharacteristicDto AddNew();
 		bool Create(CharacteristicDto dto);
-		List<LocationDto> GetAllLocations();
+		SearchCriteriaDto GetSearchCriterias();
 	}
 }
 

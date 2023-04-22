@@ -25,7 +25,7 @@ namespace Services.Implementation
 
         public PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(Guid? locationId, int pageIndex, int pageSize) {
             var results = new List<CharacteristicDto>();
-            var query = _unitOfWork.Characteristic.GetAll();
+            var query = _unitOfWork.Characteristic.Query();
 
             if (locationId != Guid.Empty)
             {
@@ -68,37 +68,37 @@ namespace Services.Implementation
         {
             var dto = new CharacteristicDto();
 
-            dto.Locations = _unitOfWork.Location.GetAll()
+            dto.Locations = _unitOfWork.Location.Query()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
-            dto.Types = _unitOfWork.Type.GetAll()
+            dto.Types = _unitOfWork.Type.Query()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Type,
                     Value = s.Id.ToString()
                 });
-            dto.Genders = _unitOfWork.Gender.GetAll()
+            dto.Genders = _unitOfWork.Gender.Query()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Gender,
                     Value = s.Id.ToString()
                 });
-            dto.Specieses = _unitOfWork.Species.GetAll()
+            dto.Specieses = _unitOfWork.Species.Query()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Species,
                     Value = s.Id.ToString()
                 });
-            dto.Statuses = _unitOfWork.Status.GetAll()
+            dto.Statuses = _unitOfWork.Status.Query()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Status,
                     Value = s.Id.ToString()
                 });
-            dto.Origins = _unitOfWork.Origin.GetAll()
+            dto.Origins = _unitOfWork.Origin.Query()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
@@ -115,12 +115,6 @@ namespace Services.Implementation
             try
             {
                 var item = _mapper.Map<Entities.Characteristic>(dto);
-                item.GenderItem = null;
-                item.SpeciesItem = null;
-                item.Location = null;
-                item.Origin = null;
-                item.TypeItem = null;
-                item.StatusItem = null;
 
                 _unitOfWork.Characteristic.Add(item);
                 _unitOfWork.Save();
@@ -134,17 +128,21 @@ namespace Services.Implementation
             }
         }
 
-        public List<LocationDto> GetAllLocations()
+        public SearchCriteriaDto GetSearchCriterias()
         {
-            var res = new List<LocationDto>();
+            var criteriaDto = new SearchCriteriaDto();
 
-            var response = _unitOfWork.Location.GetAll().ToList();
-            foreach(var item in response)
+            var locations = _unitOfWork.Location.Query().ToList();
+            foreach(var location in locations)
             {
-                res.Add(_mapper.Map<LocationDto>(item));
+                criteriaDto.Locations.Add(new SelectListItem
+                {
+                    Text = location.Name,
+                    Value = location.Id.ToString()
+                });
             }
 
-            return res;
+            return criteriaDto;
         }
     }
 }

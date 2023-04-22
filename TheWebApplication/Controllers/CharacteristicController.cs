@@ -29,17 +29,8 @@ public class CharacteristicController : Controller
     [HttpGet]
     public IActionResult Index(int? pageIndex)
     {
-        var locations = _charService.GetAllLocations();
-        var viewModel = new LocationsViewModel();
-
-        foreach(var location in locations)
-        {
-            viewModel.Locations.Add(new SelectListItem()
-            {
-                Text = location.Name,
-                Value = location.Id.ToString()
-            });
-        }
+        var searchCriteriaDto = _charService.GetSearchCriterias();
+        var viewModel = _mapper.Map<SearchCriteriaViewModel>(searchCriteriaDto);
 
         return View(viewModel);
     }
