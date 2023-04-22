@@ -25,35 +25,44 @@ namespace Services.Implementation
 
         public PagedResponse<List<CharacteristicDto>> GetAllCharacteristic(Guid? locationId, int pageIndex, int pageSize) {
             var results = new List<CharacteristicDto>();
-            var query = _unitOfWork.Characteristic.Query();
+            int totalPage = 0;
 
-            if (locationId != Guid.Empty)
+            try
             {
-                query = query.Where(w => w.LocationId == locationId);
+                var query = _unitOfWork.Characteristic.Query();
+
+                if (locationId != Guid.Empty)
+                {
+                    query = query.Where(w => w.LocationId == locationId);
+                }
+
+                totalPage = query.Count() / pageSize + 1;
+                var response = query
+                    .OrderBy(o => o.Id)
+                    .Skip(pageIndex * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+                var currentItem = pageIndex * pageSize + response.Count();
+
+                for (var i = 0; i < response.Count; i++)
+                {
+                    var item = response[i];
+                    item.StatusItem = _unitOfWork.Status.GetByIdOrDefault(item.StatusId);
+                    item.TypeItem = _unitOfWork.Type.GetByIdOrDefault(item.TypeId);
+                    item.SpeciesItem = _unitOfWork.Species.GetByIdOrDefault(item.SpeciesId);
+                    item.GenderItem = _unitOfWork.Gender.GetByIdOrDefault(item.GenderId);
+                    item.Episodes = _unitOfWork.Episode.GetByCharacteristicId(item.Id).ToList();
+                    item.Location = _unitOfWork.Location.GetByIdOrDefault(item.LocationId);
+                    item.Origin = _unitOfWork.Origin.GetByIdOrDefault(item.OriginId);
+
+                    var dto = _mapper.Map<CharacteristicDto>(item);
+                    dto.No = pageIndex * pageSize + i + 1;
+                    results.Add(dto);
+                }
             }
-
-            var totalPage = query.Count() / pageSize + 1;
-            var response = query
-                .OrderBy(o => o.Id)
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize)
-                .ToList();
-            var currentItem = pageIndex * pageSize + response.Count();
-
-            for (var i = 0; i < response.Count; i++)
+            catch(Exception ex)
             {
-                var item = response[i];
-                item.StatusItem = _unitOfWork.Status.GetByIdOrDefault(item.StatusId);
-                item.TypeItem = _unitOfWork.Type.GetByIdOrDefault(item.TypeId);
-                item.SpeciesItem = _unitOfWork.Species.GetByIdOrDefault(item.SpeciesId);
-                item.GenderItem = _unitOfWork.Gender.GetByIdOrDefault(item.GenderId);
-                item.Episodes = _unitOfWork.Episode.GetByCharacteristicId(item.Id).ToList();
-                item.Location = _unitOfWork.Location.GetByIdOrDefault(item.LocationId);
-                item.Origin = _unitOfWork.Origin.GetByIdOrDefault(item.OriginId);
-
-                var dto = _mapper.Map<CharacteristicDto>(item);
-                dto.No = pageIndex * pageSize + i + 1;
-                results.Add(dto);
+                _logger.LogError("Error when getting list of characteristic", ex);
             }
 
             return new PagedResponse<List<CharacteristicDto>>()
@@ -132,14 +141,21 @@ namespace Services.Implementation
         {
             var criteriaDto = new SearchCriteriaDto();
 
-            var locations = _unitOfWork.Location.Query().ToList();
-            foreach(var location in locations)
+            try
             {
-                criteriaDto.Locations.Add(new SelectListItem
+                var locations = _unitOfWork.Location.Query().ToList();
+                foreach (var location in locations)
                 {
-                    Text = location.Name,
-                    Value = location.Id.ToString()
-                });
+                    criteriaDto.Locations.Add(new SelectListItem
+                    {
+                        Text = location.Name,
+                        Value = location.Id.ToString()
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Error when getting list of criteria", ex);
             }
 
             return criteriaDto;

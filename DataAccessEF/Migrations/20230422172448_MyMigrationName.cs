@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessEF.Migrations
 {
     /// <inheritdoc />
-    public partial class MyMigrationName1 : Migration
+    public partial class MyMigrationName : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,10 +101,10 @@ namespace DataAccessEF.Migrations
                     SpeciesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     GenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OriginId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OriginId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -119,14 +119,12 @@ namespace DataAccessEF.Migrations
                         name: "FK_Characteristic_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Characteristic_Origin_OriginId",
                         column: x => x.OriginId,
                         principalTable: "Origin",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Characteristic_SpeciesItem_SpeciesId",
                         column: x => x.SpeciesId,

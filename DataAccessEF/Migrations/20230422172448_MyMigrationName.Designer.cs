@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessEF.Migrations
 {
     [DbContext(typeof(TVShowContext))]
-    [Migration("20230421152237_MyMigrationName1")]
-    partial class MyMigrationName1
+    [Migration("20230422172448_MyMigrationName")]
+    partial class MyMigrationName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,11 +38,9 @@ namespace DataAccessEF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("LocationId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -50,7 +48,6 @@ namespace DataAccessEF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("OriginId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("SpeciesId")
@@ -63,7 +60,6 @@ namespace DataAccessEF.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -230,15 +226,11 @@ namespace DataAccessEF.Migrations
 
                     b.HasOne("Domain.Entities.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("Domain.Entities.Origin", "Origin")
                         .WithMany()
-                        .HasForeignKey("OriginId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OriginId");
 
                     b.HasOne("Domain.Entities.SpeciesItem", "SpeciesItem")
                         .WithMany()

@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  thewebapplication:
+    image: ${DOCKER_REGISTRY-}thewebapplication
+    build:
+      context: .
+      dockerfile: TheWebApplication/Dockerfile
+    links:
+      - sqldata
+    depends_on:
+      - sqldata
+      - theconsoleprogram
+    restart: always
+ 
+  theconsoleprogram:
+    image: ${DOCKER_REGISTRY-}theconsoleprogram
+    build:
+      context: .
+      dockerfile: TheConsoleProgram/Dockerfile
+    links:
+      - sqldata
+    depends_on:
+      - "sqldata"
+    restart: always
+
+  sqldata:  
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: "MyPass@word"  
+    volumes:  
+      - ./data/mssql:/var/opt/mssql3
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:  
+      - '5433:1433'

@@ -9,5 +9,5 @@ dotnet ef
 dotnet ef migrations add initial
 dotnet ef database update
 
-dotnet ef migrations add MyMigrationName3 --startup-project TheConsoleProgram --project DataAccessEF
+dotnet ef migrations add MyMigrationName --startup-project TheConsoleProgram --project DataAccessEF
 dotnet ef database update --startup-project TheConsoleProgram --project DataAccessEF

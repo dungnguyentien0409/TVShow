@@ -25,11 +25,6 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Configuration.AddConfigurationFile("appsettings.test.json");
-
-        builder.Services.AddDbContext<TVShowContext>(options =>
-
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-        );
         builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         var mapperConfig = new MapperConfiguration(mc =>
@@ -43,6 +38,11 @@ public class Program
 
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
         builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();
+        System.Threading.Thread.Sleep(900000);
+        builder.Services.AddDbContext<TVShowContext>(options =>
+
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        );
 
         var app = builder.Build();
 

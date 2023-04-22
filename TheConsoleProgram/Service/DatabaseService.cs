@@ -48,14 +48,14 @@ namespace Service
 
 		private void CleanUpData()
 		{
-            _unitOfWork.Characteristic.RemoveRange(_unitOfWork.Characteristic.GetAll());
-            _unitOfWork.Episode.RemoveRange(_unitOfWork.Episode.GetAll());
-            _unitOfWork.Gender.RemoveRange(_unitOfWork.Gender.GetAll());
-            _unitOfWork.Location.RemoveRange(_unitOfWork.Location.GetAll());
-            _unitOfWork.Origin.RemoveRange(_unitOfWork.Origin.GetAll());
-            _unitOfWork.Species.RemoveRange(_unitOfWork.Species.GetAll());
-            _unitOfWork.Status.RemoveRange(_unitOfWork.Status.GetAll());
-            _unitOfWork.Type.RemoveRange(_unitOfWork.Type.GetAll());
+            _unitOfWork.Characteristic.RemoveRange(_unitOfWork.Characteristic.Query().ToList());
+            _unitOfWork.Episode.RemoveRange(_unitOfWork.Episode.Query().ToList());
+            _unitOfWork.Gender.RemoveRange(_unitOfWork.Gender.Query().ToList());
+            _unitOfWork.Location.RemoveRange(_unitOfWork.Location.Query().ToList());
+            _unitOfWork.Origin.RemoveRange(_unitOfWork.Origin.Query().ToList());
+            _unitOfWork.Species.RemoveRange(_unitOfWork.Species.Query().ToList());
+            _unitOfWork.Status.RemoveRange(_unitOfWork.Status.Query().ToList());
+            _unitOfWork.Type.RemoveRange(_unitOfWork.Type.Query().ToList());
             _unitOfWork.Save();
 		}
 
