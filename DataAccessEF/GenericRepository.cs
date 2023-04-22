@@ -10,8 +10,8 @@ namespace DataAccessEF
         where T : EntityBase
         where TDbContext : DbContext
 	{
-        protected readonly TVShowContext context;
-        public GenericRepository(TVShowContext context)
+        protected readonly TDbContext context;
+        public GenericRepository(TDbContext context)
         {
             this.context = context;
         }
