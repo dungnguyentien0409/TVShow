@@ -2,10 +2,13 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Domain.Interfaces;
+using Domain.Entities;
 
 namespace DataAccessEF
 {
-	public class GenericRepository<T> : IGenericRepository<T> where T : class
+	public abstract class GenericRepository<T, TDbContext> : IGenericRepository<T>
+        where T : EntityBase
+        where TDbContext : DbContext
 	{
         protected readonly TVShowContext context;
         public GenericRepository(TVShowContext context)

@@ -4,7 +4,7 @@ using Domain.Interfaces;
 
 namespace DataAccessEF.Repository
 {
-	public class SpeciesRepository : GenericRepository<SpeciesItem>, ISpeciesRepository
+	public class SpeciesRepository : GenericRepository<SpeciesItem, TVShowContext>, ISpeciesRepository
     {
         public SpeciesRepository(TVShowContext context) : base(context)
         {
