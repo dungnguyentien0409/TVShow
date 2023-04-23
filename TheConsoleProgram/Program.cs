@@ -11,8 +11,6 @@ namespace TheConsoleProgram;
 
 class Program
 {
-    const string RICK_AND_MORTY_ENDPOINT = "https://rickandmortyapi.com/api/character/";
-
     public static void Main(string[] args)
     {
         var config = new ConfigurationBuilder()
@@ -23,6 +21,7 @@ class Program
         var contextOptions = new DbContextOptionsBuilder<TVShowContext>()
             .UseSqlServer(connectionString)
             .Options;
+        var crawlingEnpoint = config.GetValue<string>("CrawlingDataEnpoint");
 
         try
         {
@@ -30,7 +29,7 @@ class Program
             {
                 context.Database.Migrate();
 
-                var databaseService = new DatabaseService(context, RICK_AND_MORTY_ENDPOINT);
+                var databaseService = new DatabaseService(context, crawlingEnpoint);
                 databaseService.ImportToDatabase();
             }
         }

@@ -38,7 +38,7 @@ namespace Services.Implementation
 
                 totalPage = query.Count() / pageSize + 1;
                 var response = query
-                    .OrderBy(o => o.Id)
+                    .OrderBy(o => o.Created)
                     .Skip(pageIndex * pageSize)
                     .Take(pageSize)
                     .ToList();

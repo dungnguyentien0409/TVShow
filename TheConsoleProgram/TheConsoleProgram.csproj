@@ -46,6 +46,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessEF\DataAccessEF.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 </Project>
