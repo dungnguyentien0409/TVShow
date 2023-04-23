@@ -17,9 +17,7 @@ services:
       - theconsoleprogram
     networks:
       - myappnetwork
-    restart: always
 
- 
   theconsoleprogram:
     image: ${DOCKER_REGISTRY-}theconsoleprogram
     build:
@@ -31,7 +29,6 @@ services:
       - "sqldata"
     networks:
       - myappnetwork
-    restart: always
 
   sqldata:  
     image: mcr.microsoft.com/azure-sql-edge:latest
