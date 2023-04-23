@@ -19,24 +19,27 @@ class Program
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
-        var connectionString = config.GetConnectionString("DefaultConnection");
+        var connectionString = config.GetConnectionString("Connection");
         var contextOptions = new DbContextOptionsBuilder<TVShowContext>()
             .UseSqlServer(connectionString)
             .Options;
 
-        using (var context = new TVShowContext(contextOptions))
+        try
         {
-            var tmp = context.Database.CanConnect();
-            //if (!context.Database.CanConnect()) return;
+            using (var context = new TVShowContext(contextOptions))
+            {
+                context.Database.Migrate();
 
-            context.Database.Migrate();
-
-            var databaseService = new DatabaseService(context, RICK_AND_MORTY_ENDPOINT);
-            databaseService.ImportToDatabase();
+                var databaseService = new DatabaseService(context, RICK_AND_MORTY_ENDPOINT);
+                databaseService.ImportToDatabase();
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Error to migrate db: " + ex.Message);
         }
 
-
-        //Console.WriteLine("Import data finished!");
+        Console.WriteLine("Import data finished!");
     }
 }
 

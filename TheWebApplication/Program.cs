@@ -1,4 +1,5 @@
-﻿using System.Threading.RateLimiting;
+﻿using System.IO;
+using System.Threading.RateLimiting;
 using AutoMapper;
 using Cache;
 using DataAccessEF;
@@ -39,39 +40,23 @@ public class Program
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
         builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();
         builder.Services.AddDbContext<TVShowContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
         );
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Characteristic/Error");
-        }
-        app.UseStaticFiles();
-
         app.UseRouting();
-
+        app.UseStaticFiles();
         app.UseAuthorization();
-
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Characteristic}/{action=Index}/{id?}");
-
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), "Styles")),
-            RequestPath = "/Styles"
+           Path.Combine(builder.Environment.ContentRootPath, "wwwroot/js")),
+            RequestPath = "/js"
         });
-        app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Scripts")),
-                RequestPath = "/Scripts"
-            }
-        );
 
         app.Run();
     }
