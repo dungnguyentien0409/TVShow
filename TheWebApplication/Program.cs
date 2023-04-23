@@ -50,7 +50,6 @@ public class Program
             app.UseExceptionHandler("/Characteristic/Error");
         }
         app.UseStaticFiles();
-
         app.UseRouting();
 
         app.UseAuthorization();
@@ -58,20 +57,6 @@ public class Program
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Characteristic}/{action=Index}/{id?}");
-
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), "Styles")),
-            RequestPath = "/Styles"
-        });
-        app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Scripts")),
-                RequestPath = "/Scripts"
-            }
-        );
 
         app.Run();
     }

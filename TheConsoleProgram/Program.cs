@@ -28,9 +28,6 @@ class Program
         {
             using (var context = new TVShowContext(contextOptions))
             {
-                var tmp = context.Database.CanConnect();
-                if (!context.Database.CanConnect()) return;
-
                 context.Database.Migrate();
 
                 var databaseService = new DatabaseService(context, RICK_AND_MORTY_ENDPOINT);

@@ -13,10 +13,12 @@ services:
     links:
       - sqldata
     depends_on:
-      - sqldata
-      - theconsoleprogram
+      sqldata:
+        condition: service_started
     networks:
       - myappnetwork
+    restart: unless-stopped
+     
 
   theconsoleprogram:
     image: ${DOCKER_REGISTRY-}theconsoleprogram
@@ -26,7 +28,8 @@ services:
     links:
       - sqldata
     depends_on:
-      - "sqldata"
+      sqldata:
+        condition: service_started
     networks:
       - myappnetwork
 
