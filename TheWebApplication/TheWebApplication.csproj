@@ -5,14 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <None Remove="Middleware\" />
-    <None Remove="Scripts\" />
-    <None Remove="Styles\" />
     <None Remove="Services\" />
     <None Remove="Services\Interfaces\" />
     <None Remove="Services\Implementation\" />
@@ -21,8 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Middleware\" />
-    <Folder Include="Scripts\" />
-    <Folder Include="Styles\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Interfaces\" />
     <Folder Include="Services\Implementation\" />
@@ -44,10 +39,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="wwwroot\**" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="Views\**">
+    <Content Update="Views\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Update="appsettings.json">
@@ -55,11 +50,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Update="wwwroot\css\_Layout.cshtml.css">
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Program.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\css\_Layout.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Compile>
   </ItemGroup>
 </Project>
