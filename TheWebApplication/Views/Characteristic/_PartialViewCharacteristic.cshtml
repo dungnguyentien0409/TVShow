@@ -31,7 +31,7 @@
             var no = i + 1;
             var item = Model.Results[i];
             <tr>
-                <td>@item.No</td>
+                <td style="width: min-content">@item.No</td>
                 <td>@item.Name</td>
                 <td>@item.StatusDisplay</td>
                 <td>@item.SpeciesDisplay</td>
@@ -40,7 +40,7 @@
                 <td>@item.OriginDisplay</td>
                 <td>@item.LocationDisplay</td>
                 <td>@item.Image</td>
-                <td>
+                <td class="crop">
                     @if (item != null && item.Episode != null)
                     {
                         foreach (var episode in item.Episode)

@@ -12,7 +12,9 @@ namespace DataAccessEF.Repository
 
         public IEnumerable<Episode> GetByCharacteristicId(Guid charId)
         {
-            return context.Set<Episode>().Where(w => w.CharacteristicId == charId);
+            return context.Set<Episode>()
+                .Where(w => w.CharacteristicId == charId)
+                .OrderBy(o => o.Created);
         }
     }
 }

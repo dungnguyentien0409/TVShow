@@ -114,9 +114,6 @@ function submitDetailsForm() {
 
     if (!check) return;
 
-    var formData = getFormData("#CreateCharacteristic");
-    console.log(formData);
-
     $.ajax({
         type: "POST",
         url: preUrl + "/characteristic",
