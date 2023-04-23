@@ -11,8 +11,9 @@ namespace Service
 		TVShowContext _context;
 		UnitOfWork _unitOfWork;
         string _endpoint;
+        public const string ALIVE_STATUS = "Alive";
 
-		public DatabaseService(TVShowContext context, string endpoint)
+        public DatabaseService(TVShowContext context, string endpoint)
 		{
 			_context = context;
 			_unitOfWork = new UnitOfWork(context);
@@ -21,17 +22,20 @@ namespace Service
 
         public void ImportToDatabase()
         {
-            var characteristics = new List<Characteristic>();
             var currentUrl = _endpoint;
 
             CleanUpData();
 
             while (!string.IsNullOrEmpty(currentUrl))
             {
-                (currentUrl, characteristics) = DataHelper.GetDataFromRickAndMorty(currentUrl);
-                if (characteristics.Count == 0) continue;
+                var remoteDataResponse = RemoteDataHelper.GetAndParseData(currentUrl);
+                currentUrl = remoteDataResponse.Info.Next;
 
-                ImportCurrentBatchToDatabase(characteristics);
+                if (remoteDataResponse.Results.Count == 0) continue;
+
+                remoteDataResponse = RemoteDataHelper.FilterDataByStatus(remoteDataResponse, ALIVE_STATUS);
+
+                ImportCurrentBatchToDatabase(remoteDataResponse.Results);
             }
         }
 
