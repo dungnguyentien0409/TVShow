@@ -23,15 +23,16 @@ class Program
         var contextOptions = new DbContextOptionsBuilder<TVShowContext>()
             .UseSqlServer(connectionString)
             .Options;
-        
+
         using (var context = new TVShowContext(contextOptions))
         {
-            if (context.Database.CanConnect()) {
-                context.Database.Migrate();
+            var tmp = context.Database.CanConnect();
+            //if (!context.Database.CanConnect()) return;
 
-                var databaseService = new DatabaseService(context, RICK_AND_MORTY_ENDPOINT);
-                databaseService.ImportToDatabase();
-            }
+            context.Database.Migrate();
+
+            var databaseService = new DatabaseService(context, RICK_AND_MORTY_ENDPOINT);
+            databaseService.ImportToDatabase();
         }
 
 

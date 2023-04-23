@@ -14,27 +14,27 @@ namespace Dto
 
         public Guid? StatusId { get; set; }
         public StatusItemDto? StatusItem { get; set; }
-        public IEnumerable<SelectListItem> Statuses { get; set; }
+        public List<SelectListItem> Statuses { get; set; }
 
         public Guid? SpeciesId { get; set; }
         public SpeciesItemDto? SpeciesItem { get; set; }
-        public IEnumerable<SelectListItem> Specieses { get; set; }
+        public List<SelectListItem> Specieses { get; set; }
 
         public Guid? TypeId { get; set; }
         public TypeItemDto? TypeItem { get; set; }
-        public IEnumerable<SelectListItem> Types { get; set; }
+        public List<SelectListItem> Types { get; set; }
 
         public Guid? GenderId { get; set; }
         public GenderItemDto? GenderItem { get; set; }
-        public IEnumerable<SelectListItem> Genders { get; set; }
+        public List<SelectListItem> Genders { get; set; }
 
         public Guid? LocationId { get; set; }
         public LocationDto? LocationItem { get; set; }
-        public IEnumerable<SelectListItem> Locations { get; set; }
+        public List<SelectListItem> Locations { get; set; }
 
         public Guid? OriginId { get; set; }
         public OriginDto? OriginItem { get; set; }
-        public IEnumerable<SelectListItem> Origins { get; set; }
+        public List<SelectListItem> Origins { get; set; }
 
         public string? Image { get; set; }
 
@@ -53,6 +53,8 @@ namespace Dto
             Genders = InitDropDownValue();
             Locations = InitDropDownValue();
             Origins = InitDropDownValue();
+            Url = "";
+            Image = "";
         }
 
         private List<SelectListItem> InitDropDownValue()

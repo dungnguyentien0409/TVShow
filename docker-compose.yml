@@ -1,5 +1,9 @@
 version: '3.4'
 
+networks:
+  myappnetwork:
+    name: myappnetwork
+
 services:
   thewebapplication:
     image: ${DOCKER_REGISTRY-}thewebapplication
@@ -12,6 +16,8 @@ services:
       - sqldata
       - theconsoleprogram
     restart: always
+    networks:
+      - myappnetwork
  
   theconsoleprogram:
     image: ${DOCKER_REGISTRY-}theconsoleprogram
@@ -23,6 +29,8 @@ services:
     depends_on:
       - "sqldata"
     restart: always
+    networks:
+      - myappnetwork
 
   sqldata:  
     image: mcr.microsoft.com/azure-sql-edge:latest
@@ -34,3 +42,5 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:  
       - '5433:1433'
+    networks:
+      - myappnetwork

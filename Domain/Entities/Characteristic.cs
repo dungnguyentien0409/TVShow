@@ -35,7 +35,7 @@ namespace Domain.Entities
         
         public string? Image { get; set; }
 
-        public ICollection<Episode> Episodes { get; set; }
+        public List<Episode> Episodes { get; set; }
 
         public string? Url { get; set; }
     }

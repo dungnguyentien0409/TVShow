@@ -1,4 +1,4 @@
-﻿var preUrl = '/Characteristic/'
+﻿var preUrl = '/characteristic-management'
 var pageIndex = 0;
 var locationId = "00000000-0000-0000-0000-000000000000";
 
@@ -9,7 +9,7 @@ $("#addNew").click(function (e) {
     e.stopPropagation();
     $.ajax({
         type: "GET",
-        url: preUrl + "AddNew",
+        url: preUrl + "/characteristic",
         contentType: "application/json; charset=utf-8",
         data: { "Id": id },
         datatype: "json",
@@ -36,7 +36,7 @@ function selectLocation(selectedLocationId) {
 
     pageIndex = 0;
     $("#TotalPage").val(0);
-    movePage(0);
+    loadCharGrid(0);
 }
 
 function movePage(direction) {
@@ -59,20 +59,21 @@ function movePage(direction) {
 }
 
 function loadCharGrid(pageIndex) {
+    var criteria = {
+        "LocationId": locationId != 'null' ? locationId : null,
+        "PageIndex": pageIndex
+    };
+
     $.ajax({
         type: "POST",
         datatype: "json",
-        url: preUrl + "GetCharacteristicGrid",
-        data: {
-            "LocationId": locationId,
-            "PageIndex": pageIndex
-        },
+        url: preUrl + "/characteristics",
+        data: criteria,
         success: function (data) {
             $('#charGrid').html(data);
         },
         error: function (e) {
             debugger;
-            console.log(e);
             alert("Dynamic content load failed.");
         }
     });
@@ -113,14 +114,13 @@ function submitDetailsForm() {
 
     if (!check) return;
 
-    var data = $("#CreateCharacteristic").serialize();
-    console.log(data);
-    
+    var formData = getFormData("#CreateCharacteristic");
+    console.log(formData);
+
     $.ajax({
         type: "POST",
-        url: preUrl + "CreateCharacteristic",
+        url: preUrl + "/characteristic",
         data: $("#CreateCharacteristic").serialize(),
-        datatype: "json",
         success: function (data) {
             if (data == true) {
                 $('#myModal').modal('hide');
@@ -133,8 +133,19 @@ function submitDetailsForm() {
                 alert("Error happened when inserting new characteristic");
             }
         },
-        error: function () {
+        error: function (e) {
             alert("Error happened when inserting new characteristic");
         }
     });
+}
+
+function getFormData(formId) {
+    var unindexed_array = $(formId).serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function (n, i) {
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
 }
