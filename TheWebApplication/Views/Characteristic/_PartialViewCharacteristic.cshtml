@@ -1,0 +1,75 @@
+﻿@using ViewModels;
+
+@model PagedResponse<List<ViewModels.CharacteristicViewModel>>
+
+
+@section Styles {
+    <link href="@Url.Content("~/Styles/Characteristic.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+}
+
+
+<div class="row">
+    <table id="characteristic">
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Species</th>
+            <th>Type</th>
+            <th>Gender</th>
+            <th>Origin</th>
+            <th>Location</th>
+            <th>Image</th>
+            <th>Episode</th>
+            <th>Url</th>
+            <th>Created</th>
+        </tr>
+
+
+        @for (var i = 0; i < @Model.Results.Count; i++)
+        {
+            var no = i + 1;
+            var item = Model.Results[i];
+            <tr>
+                <td>@item.No</td>
+                <td>@item.Name</td>
+                <td>@item.StatusDisplay</td>
+                <td>@item.SpeciesDisplay</td>
+                <td>@item.TypeDisplay</td>
+                <td>@item.GenderDisplay</td>
+                <td>@item.OriginDisplay</td>
+                <td>item.LocationDisplay</td>
+                <td>@item.Image</td>
+                <td>
+                    @if (item != null && item.Episode != null)
+                    {
+                        foreach (var episode in item.Episode)
+                        {
+                            <div>@episode.EpisodeUrl</div>
+                        }
+                    }
+                </td>
+                <td>@item.Url</td>
+                <td>@item.CreatedDisplay</td>
+            </tr>
+        }
+    </table>
+</div>
+@{
+    int currentPage = Model.PageIndex + 1;
+}
+@Html.HiddenFor(m => m.TotalPage)
+<div class="center-align page-info">
+    Current page: @currentPage , Total pages: @Model.TotalPage
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../../Scripts/Characteristic.js"></script>
+}
+

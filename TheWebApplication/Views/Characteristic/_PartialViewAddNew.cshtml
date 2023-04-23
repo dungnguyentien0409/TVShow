@@ -1,0 +1,63 @@
+﻿@model ViewModels.CharacteristicViewModel
+
+<div class="row center-align">
+    <h4>
+        CREATE NEW CHARACTERISTIC
+    </h4>
+</div>
+
+<form id="CreateCharacteristic">
+    @Html.HiddenFor(m => m.Id)
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.Name)</div>
+        <div class="col-9 center-align">@Html.TextBoxFor(m => m.Name, new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.StatusItem)</div>
+        <div class="col-9 center-align">@Html.DropDownListFor(m => m.StatusId, Model.Statuses, "-- Select --", new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.SpeciesItem)</div>
+        <div class="col-9 center-align">@Html.DropDownListFor(m => m.SpeciesId, Model.Specieses, "-- Select --", new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.TypeItem)</div>
+        <div class="col-9 center-align">@Html.DropDownListFor(m => m.TypeId, Model.Types, "-- Select --", new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.GenderItem)</div>
+        <div class="col-9 center-align">@Html.DropDownListFor(m => m.GenderId, Model.Genders, "-- Select --", new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.OriginItem)</div>
+        <div class="col-9 center-align">@Html.DropDownListFor(m => m.OriginId, Model.Origins, "-- Select --", new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.LocationItem)</div>
+        <div class="col-9 center-align">@Html.DropDownListFor(m => m.LocationId, Model.Locations, "-- Select --", new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.Image)</div>
+        <div class="col-9 center-align">@Html.TextBoxFor(m => m.Image, new { @class = "form-control, fit-content" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.Episode)</div>
+        <div class="col-9 center-align">@Html.TextBoxFor(m => m.EpisodeString, new { @class = "form-control, fit-content", placeholder = "Seprate the episode by comma" })</div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 right-align">@Html.LabelFor(m => m.Url)</div>
+        <div class="col-9 center-align">@Html.TextBoxFor(m => m.Url, new { @class = "form-control, fit-content" })</div>
+    </div>
+</form>
+<div class="center-align">
+    <button class="button-style" onclick="submitDetailsForm()">CREATE</button>
+</div>

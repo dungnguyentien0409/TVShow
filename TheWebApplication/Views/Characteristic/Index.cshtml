@@ -1,0 +1,57 @@
+﻿@using ViewModels;
+@model SearchCriteriaViewModel;
+
+@{
+    //ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Styles/Characteristic.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+}
+
+<div class="row">
+    <div class="col-9"></div>
+    <div class="col-3 right-align">
+        <button id="addNew" class="button-style">Add New Characteristic</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2">
+        @Html.LabelFor(m => m.LocationId)
+    </div>
+    <div class="col-5">
+        @Html.DropDownListFor(m => m.LocationId, Model.Locations, new { @class = "form-control, fit-content", @onchange="selectLocation(this.value)" })
+    </div>
+</div>
+<div id="charGrid" class="row"></div>
+
+<div class="right-align">
+    <buton id="prev" class="button-style" onclick="movePage(-1)">PREV</buton>
+    <buton id="next" class="button-style" onclick="movePage(1)">NEXT</buton>
+</div>
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../../Scripts/Characteristic.js"></script>
+    <script>
+        (function () {
+            movePage(0, locationId);
+        })();
+    </script>
+}
+
