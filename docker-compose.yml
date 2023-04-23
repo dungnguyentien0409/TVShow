@@ -15,9 +15,10 @@ services:
     depends_on:
       - sqldata
       - theconsoleprogram
-    restart: always
     networks:
       - myappnetwork
+    restart: always
+
  
   theconsoleprogram:
     image: ${DOCKER_REGISTRY-}theconsoleprogram
@@ -28,9 +29,9 @@ services:
       - sqldata
     depends_on:
       - "sqldata"
-    restart: always
     networks:
       - myappnetwork
+    restart: always
 
   sqldata:  
     image: mcr.microsoft.com/azure-sql-edge:latest
@@ -41,6 +42,6 @@ services:
       - ./data/mssql:/var/opt/mssql3
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:  
-      - '5433:1433'
+      - '1440:1433'
     networks:
       - myappnetwork

@@ -39,7 +39,7 @@ public class Program
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
         builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();
         builder.Services.AddDbContext<TVShowContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
         );
 
         var app = builder.Build();

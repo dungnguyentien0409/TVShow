@@ -19,7 +19,7 @@ class Program
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
-        var connectionString = config.GetConnectionString("DefaultConnection");
+        var connectionString = config.GetConnectionString("Connection");
         var contextOptions = new DbContextOptionsBuilder<TVShowContext>()
             .UseSqlServer(connectionString)
             .Options;
@@ -27,7 +27,7 @@ class Program
         using (var context = new TVShowContext(contextOptions))
         {
             var tmp = context.Database.CanConnect();
-            //if (!context.Database.CanConnect()) return;
+            if (!context.Database.CanConnect()) return;
 
             context.Database.Migrate();
 
@@ -36,7 +36,7 @@ class Program
         }
 
 
-        //Console.WriteLine("Import data finished!");
+        Console.WriteLine("Import data finished!");
     }
 }
 
