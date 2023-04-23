@@ -66,7 +66,7 @@
 .fit-content {
     overflow-wrap: anywhere;
     width: 68%;
-    text-align: center;
+    text-align: left;
 }
 
 .left-align {
@@ -83,6 +83,9 @@ input {
     text-align: left !important;
 }
 
+textarea {
+    text-align: left !important;
+}
 input[required] {
     display: block;
 }

@@ -20,13 +20,6 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-        builder.Services.AddControllersWithViews();
-        builder.Configuration.AddConfigurationFile("appsettings.test.json");
-        builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-
         var mapperConfig = new MapperConfiguration(mc =>
         {
             mc.AddProfile(new EntitiesToDtoMappingProfile());
@@ -34,13 +27,18 @@ public class Program
         });
 
         IMapper mapper = mapperConfig.CreateMapper();
+
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        builder.Services.AddControllersWithViews();
+        builder.Configuration.AddConfigurationFile("appsettings.json");
+        builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
         builder.Services.AddSingleton(mapper);
 
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
         builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();
-        System.Threading.Thread.Sleep(900000);
         builder.Services.AddDbContext<TVShowContext>(options =>
-
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         );
 

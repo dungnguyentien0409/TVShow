@@ -77,44 +77,49 @@ namespace Services.Implementation
         {
             var dto = new CharacteristicDto();
 
-            dto.Locations = _unitOfWork.Location.Query()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                });
-            dto.Types = _unitOfWork.Type.Query()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Type,
-                    Value = s.Id.ToString()
-                });
-            dto.Genders = _unitOfWork.Gender.Query()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Gender,
-                    Value = s.Id.ToString()
-                });
-            dto.Specieses = _unitOfWork.Species.Query()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Species,
-                    Value = s.Id.ToString()
-                });
-            dto.Statuses = _unitOfWork.Status.Query()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Status,
-                    Value = s.Id.ToString()
-                });
-            dto.Origins = _unitOfWork.Origin.Query()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                });
-            dto.Url = "";
-            dto.Image = "";
+            try
+            {
+                dto.Locations = _unitOfWork.Location.Query()
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Name,
+                        Value = s.Id.ToString()
+                    }).ToList();
+                dto.Types = _unitOfWork.Type.Query()
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Type,
+                        Value = s.Id.ToString()
+                    }).ToList();
+                dto.Genders = _unitOfWork.Gender.Query()
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Gender,
+                        Value = s.Id.ToString()
+                    }).ToList();
+                dto.Specieses = _unitOfWork.Species.Query()
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Species,
+                        Value = s.Id.ToString()
+                    }).ToList();
+                dto.Statuses = _unitOfWork.Status.Query()
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Status,
+                        Value = s.Id.ToString()
+                    }).ToList();
+                dto.Origins = _unitOfWork.Origin.Query()
+                    .Select(s => new SelectListItem
+                    {
+                        Text = s.Name,
+                        Value = s.Id.ToString()
+                    }).ToList();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Error when getting master data for characteristic", ex);
+            }
 
             return dto;
         }
@@ -123,10 +128,15 @@ namespace Services.Implementation
         {
             try
             {
+                dto.Id = Guid.NewGuid();
+                dto.Created = DateTime.Now;
                 var item = _mapper.Map<Entities.Characteristic>(dto);
 
                 _unitOfWork.Characteristic.Add(item);
-                _unitOfWork.Save();
+
+                if (_unitOfWork.Save() > 0) { 
+                    CreateEpisode(dto);
+                }
 
                 return true;
             }
@@ -137,6 +147,35 @@ namespace Services.Implementation
             }
         }
 
+        private void CreateEpisode(CharacteristicDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.EpisodeString)) return;
+
+            try
+            {
+                var episodes = new List<Entities.Episode>();
+                var episodeArray = dto.EpisodeString.Split(",")
+                    .Select(s => s.Trim())
+                    .Where(w => !string.IsNullOrEmpty(w))
+                    .ToList();
+
+                foreach (var episodeUrl in episodeArray)
+                {
+                    episodes.Add(new Entities.Episode()
+                    {
+                        CharacteristicId = dto.Id,
+                        EpisodeUrl = episodeUrl,
+                        Created = DateTime.Now
+                    });
+                }
+                _unitOfWork.Episode.AddRange(episodes);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error when creating new episode", ex);
+            }
+        }
         public SearchCriteriaDto GetSearchCriterias()
         {
             var criteriaDto = new SearchCriteriaDto();

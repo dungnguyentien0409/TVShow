@@ -14,6 +14,9 @@ using Middleware;
 
 namespace TheWebApplication.Controllers;
 
+[ApiController]
+[Route("characteristic-management")]
+[Route("")]
 public class CharacteristicController : Controller
 {
     private readonly IMapper _mapper;
@@ -35,10 +38,10 @@ public class CharacteristicController : Controller
         return View(viewModel);
     }
 
-    [HttpPost]
+    [HttpPost("characteristics")]
     [AddHeader("from-database", "true")]
-    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 5)]
-    public IActionResult GetCharacteristicGrid(CharacteristicGridViewModel request)
+    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 0)]
+    public IActionResult GetCharacteristicGrid([FromForm] CharacteristicGridViewModel request)
     {
         var index = request.PageIndex.HasValue ? Math.Max(request.PageIndex.Value, 0) : 0;
         var viewModel = new PagedResponse<List<CharacteristicViewModel>>();
@@ -54,7 +57,7 @@ public class CharacteristicController : Controller
         return PartialView("_PartialViewCharacteristic", viewModel);
     }
 
-    [HttpGet]
+    [HttpGet("characteristic")]
     public IActionResult AddNew()
     {
         var newCharItem = _charService.AddNew();
@@ -63,9 +66,9 @@ public class CharacteristicController : Controller
         return PartialView("_PartialViewAddNew", viewModel);
     }
 
-    [HttpPost]
+    [HttpPost("characteristic")]
     [RateLimiting(Name = "GetCharacteristicGrid", IsCreated = true)]
-    public IActionResult CreateCharacteristic(CharacteristicViewModel viewModel)
+    public IActionResult CreateCharacteristic([FromForm] CharacteristicViewModel viewModel)
     {
         var charDto = _mapper.Map<CharacteristicDto>(viewModel);
         var created = _charService.Create(charDto);
