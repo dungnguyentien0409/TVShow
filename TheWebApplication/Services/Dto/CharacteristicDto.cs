@@ -38,7 +38,7 @@ namespace Dto
 
         public string? Image { get; set; }
 
-        public ICollection<EpisodeDto> Episode { get; set; }
+        public ICollection<EpisodeDto> Episodes { get; set; }
         public string? EpisodeString { get; set; }
 
         public string? Url { get; set; }

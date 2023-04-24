@@ -25,7 +25,7 @@ namespace Services
                 .ForMember(dest => dest.StatusItem, opt => opt.MapFrom(src => src.StatusItem))
                 .ForMember(dest => dest.LocationItem, opt => opt.MapFrom(s => s.Location))
                 .ForMember(dest => dest.OriginItem, opt => opt.MapFrom(s => s.Origin))
-                .ForMember(dest => dest.Episode, opt => opt.MapFrom(s => s.Episodes.ToList()))
+                .ForMember(dest => dest.Episodes, opt => opt.MapFrom(s => s.Episodes.ToList()))
                 .ReverseMap();
         }
     }

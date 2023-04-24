@@ -27,7 +27,7 @@ namespace TheWebApplication
                 .ForMember(dest => dest.StatusItem, opt => opt.MapFrom(s => s.StatusItem))
                 .ForMember(dest => dest.GenderItem, opt => opt.MapFrom(s => s.GenderItem))
                 .ForMember(dest => dest.TypeItem, opt => opt.MapFrom(s => s.TypeItem))
-                .ForMember(dest => dest.Episode, opt => opt.MapFrom(s => s.Episode))
+                .ForMember(dest => dest.Episodes, opt => opt.MapFrom(s => s.Episodes))
                 .ForMember(dest => dest.Statuses, opt => opt.MapFrom(s => s.Statuses))
                 .ForMember(dest => dest.Specieses, opt => opt.MapFrom(s => s.Specieses))
                 .ForMember(dest => dest.Genders, opt => opt.MapFrom(s => s.Genders))

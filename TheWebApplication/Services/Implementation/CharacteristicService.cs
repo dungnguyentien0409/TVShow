@@ -36,7 +36,7 @@ namespace Services
                     query = query.Where(w => w.LocationId == locationId);
                 }
 
-                totalPage = query.Count() / pageSize + 1;
+                totalPage = (query.Count() + pageSize - 1) / pageSize;
                 var response = query
                     .OrderBy(o => o.Created)
                     .Skip(pageIndex * pageSize)
@@ -176,6 +176,7 @@ namespace Services
                 _logger.LogError("Error when creating new episode", ex);
             }
         }
+
         public SearchCriteriaDto GetSearchCriterias()
         {
             var criteriaDto = new SearchCriteriaDto();

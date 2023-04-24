@@ -41,9 +41,9 @@
                 <td>@item.LocationDisplay</td>
                 <td>@item.Image</td>
                 <td class="crop">
-                    @if (item != null && item.Episode != null)
+                    @if (item != null && item.Episodes != null)
                     {
-                        foreach (var episode in item.Episode)
+                        foreach (var episode in item.Episodes)
                         {
                             <div>@episode.EpisodeUrl</div>
                         }

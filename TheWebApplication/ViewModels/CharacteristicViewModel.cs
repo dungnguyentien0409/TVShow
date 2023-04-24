@@ -16,6 +16,7 @@ namespace ViewModels
 
         
         public Guid? StatusId { get; set; }
+        [Display(Name="Status")]
         public StatusItemViewModel? StatusItem { get; set; }
         public string StatusDisplay
         {
@@ -27,6 +28,7 @@ namespace ViewModels
         public List<SelectListItem>? Statuses { get; set; }
 
         public Guid? SpeciesId { get; set; }
+        [Display(Name = "Species")]
         public SpeciesItemViewModel? SpeciesItem { get; set; }
         public string SpeciesDisplay
         {
@@ -38,6 +40,7 @@ namespace ViewModels
         public List<SelectListItem>? Specieses { get; set; }
 
         public Guid? TypeId { get; set; }
+        [Display(Name = "Type")]
         public TypeItemViewModel? TypeItem { get; set; }
         public string TypeDisplay
         {
@@ -49,6 +52,7 @@ namespace ViewModels
         public List<SelectListItem>? Types { get; set; }
 
         public Guid? GenderId { get; set; }
+        [Display(Name = "Gender")]
         public GenderItemViewModel? GenderItem { get; set; }
         public string GenderDisplay
         {
@@ -60,6 +64,7 @@ namespace ViewModels
         public List<SelectListItem>? Genders { get; set; }
 
         public Guid? LocationId { get; set; }
+        [Display(Name = "Location")]
         public LocationViewModel? LocationItem { get; set; }
         public string LocationDisplay
         {
@@ -71,6 +76,7 @@ namespace ViewModels
         public List<SelectListItem>? Locations { get; set; }
 
         public Guid? OriginId { get; set; }
+        [Display(Name = "Origin")]
         public OriginItemViewModel? OriginItem { get; set; }
         public string OriginDisplay
         {
@@ -83,7 +89,8 @@ namespace ViewModels
 
         public string? Image { get; set; }
 
-        public List<EpisodeViewModel>? Episode { get; set; }
+        [Display(Name = "Episode")]
+        public List<EpisodeViewModel>? Episodes { get; set; }
         public string? EpisodeString { get; set; }
 
         public string? Url { get; set; }
