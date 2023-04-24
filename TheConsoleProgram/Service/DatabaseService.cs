@@ -26,19 +26,26 @@ namespace Service
         {
             var currentUrl = _endpoint;
 
-            CleanUpData();
-
-            while (!string.IsNullOrEmpty(currentUrl))
+            try
             {
-                var remoteDataResponse = _remoteDataHelper.GetAndParseData(currentUrl);
-                currentUrl = remoteDataResponse.Info.Next;
+                CleanUpData();
 
-                if (remoteDataResponse.Results.Count == 0) continue;
+                while (!string.IsNullOrEmpty(currentUrl))
+                {
+                    var remoteDataResponse = _remoteDataHelper.GetAndParseData(currentUrl);
+                    currentUrl = remoteDataResponse.Info.Next;
 
-                var characteristicData = remoteDataResponse.Results
-                    .Where(w => w.Status == ALIVE_STATUS)
-                    .ToList();
-                ImportCurrentBatchToDatabase(characteristicData);
+                    if (remoteDataResponse.Results.Count == 0) continue;
+
+                    var characteristicData = remoteDataResponse.Results
+                        .Where(w => w.Status == ALIVE_STATUS)
+                        .ToList();
+                    ImportCurrentBatchToDatabase(characteristicData);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error when importing data: " + ex.Message);
             }
         }
 
