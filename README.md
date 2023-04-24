@@ -12,6 +12,9 @@
 - Header contains 'from-database' to indicate the data is from database
 - Query character based on planets
 
+# The Unit Test
+- Test for functions
+
 # Technology
 - C#, ASP .Net core 7.0
 - Entity FramworkCore 7.0
