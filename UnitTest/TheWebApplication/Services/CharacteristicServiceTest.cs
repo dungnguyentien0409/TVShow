@@ -56,6 +56,20 @@ namespace UnitTest
         }
 
         [Test]
+        public void GetAllCharacteristicByLocationId_ReturnAllCharacteristicByLocationId()
+        {
+            var expectedResult = new PagedResponse<List<CharacteristicDto>>
+            {
+                PageIndex = 0,
+                TotalPage = 1,
+                Results = GetExpectedCharacteristics().Where(s => s.LocationId == GUIDS[0]).ToList()
+            };
+            var actualResult = _charService.GetAllCharacteristic(GUIDS[0], 0, 5);
+
+            AssertObjectsAreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
         public void AddNewCharacteristic_ReturnMasterDataForAddNewPage()
         {
             var expectedResult = new CharacteristicDto

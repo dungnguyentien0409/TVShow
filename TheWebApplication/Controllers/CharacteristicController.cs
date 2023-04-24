@@ -42,7 +42,7 @@ public class CharacteristicController : Controller
 
     [HttpPost("characteristics")]
     [AddHeader("from-database", "true")]
-    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 5)]
+    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 0)]
     public IActionResult GetCharacteristicGrid([FromForm] CharacteristicGridViewModel request)
     {
         var index = request.PageIndex.HasValue ? Math.Max(request.PageIndex.Value, 0) : 0;
