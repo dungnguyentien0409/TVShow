@@ -45,3 +45,10 @@ services:
       - '1440:1433'
     networks:
       - myappnetwork
+
+  unittest:
+    image: ${DOCKER_REGISTRY-}unittest
+    build:
+      context: .
+      dockerfile: UnitTest/Dockerfile
+
