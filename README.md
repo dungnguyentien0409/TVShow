@@ -17,7 +17,7 @@
 
 # Technology
 - C#, ASP .Net core 7.0
-- Entity FramworkCore 7.0
+- Entity Framwork Core 7.0
 - HTML, CSS, JQuery, Bootstrap
 - SQL Server (Azure sql edge)
 - Docker
