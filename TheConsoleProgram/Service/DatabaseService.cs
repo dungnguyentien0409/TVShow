@@ -11,13 +11,15 @@ namespace Service
 		TVShowContext _context;
 		UnitOfWork _unitOfWork;
         string _endpoint;
-        public const string ALIVE_STATUS = "Alive";
+        static string ALIVE_STATUS = "Alive";
+        IRemoteDataHelper<Characteristic> _remoteDataHelper;
 
         public DatabaseService(TVShowContext context, string endpoint)
 		{
 			_context = context;
 			_unitOfWork = new UnitOfWork(context);
             _endpoint = endpoint;
+            _remoteDataHelper = new RemoteDataHelper<Characteristic>();
 		}
 
         public void ImportToDatabase()
@@ -28,14 +30,15 @@ namespace Service
 
             while (!string.IsNullOrEmpty(currentUrl))
             {
-                var remoteDataResponse = RemoteDataHelper.GetAndParseData(currentUrl);
+                var remoteDataResponse = _remoteDataHelper.GetAndParseData(currentUrl);
                 currentUrl = remoteDataResponse.Info.Next;
 
                 if (remoteDataResponse.Results.Count == 0) continue;
 
-                remoteDataResponse = RemoteDataHelper.FilterDataByStatus(remoteDataResponse, ALIVE_STATUS);
-
-                ImportCurrentBatchToDatabase(remoteDataResponse.Results);
+                var characteristicData = remoteDataResponse.Results
+                    .Where(w => w.Status == ALIVE_STATUS)
+                    .ToList();
+                ImportCurrentBatchToDatabase(characteristicData);
             }
         }
 

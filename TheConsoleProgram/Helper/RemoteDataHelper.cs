@@ -4,11 +4,11 @@ using Newtonsoft.Json;
 
 namespace Helper
 {
-	public static class RemoteDataHelper
+	public class RemoteDataHelper<T> : IRemoteDataHelper<T> where T : class
 	{
-		public static RemoteDataResponse GetAndParseData(string url)
+		public RemoteDataResponse<T> GetAndParseData(string url)
 		{
-            var remoteDataResponse = new RemoteDataResponse();
+            var remoteDataResponse = new RemoteDataResponse<T>();
 
             try
             {
@@ -19,9 +19,9 @@ namespace Helper
                 using var reader = new StreamReader(response.Content.ReadAsStream());
                 var jsonResponse = reader.ReadToEnd();
 
-                remoteDataResponse = JsonConvert.DeserializeObject<RemoteDataResponse>(jsonResponse);
+                remoteDataResponse = JsonConvert.DeserializeObject<RemoteDataResponse<T>>(jsonResponse);
 
-                if (remoteDataResponse == null) return new RemoteDataResponse();
+                if (remoteDataResponse == null) return new RemoteDataResponse<T>();
             }
             catch(Exception ex)
             {
@@ -29,17 +29,6 @@ namespace Helper
             }
 
             return remoteDataResponse;
-        }
-
-        public static RemoteDataResponse FilterDataByStatus(RemoteDataResponse data, string status)
-        {
-            if (data == null || data.Results == null) return data;
-
-            data.Results = data.Results
-                .Where(w => w.Status == status)
-                .ToList();
-
-            return data;
         }
 	}
 }

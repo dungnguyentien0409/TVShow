@@ -1,15 +1,15 @@
 ﻿using System;
 namespace Models
 {
-	public class RemoteDataResponse
+	public class RemoteDataResponse<T> where T : class
 	{
 		public Info Info { get; set; }
-		public List<Characteristic> Results { get; set; }
+		public List<T> Results { get; set; }
 
 		public RemoteDataResponse()
 		{
 			Info = new Info();
-			Results = new List<Characteristic>();
+			Results = new List<T>();
 		}
 	}
 
