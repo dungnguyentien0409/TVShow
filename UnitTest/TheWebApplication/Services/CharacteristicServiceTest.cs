@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,12 @@ namespace UnitTest
         private List<TypeItem> types;
         private List<Episode> episodes;
         private DateTime _currentTime;
+        private List<Guid> GUIDS = new List<Guid>
+        {
+            new Guid("ab02ba75-014f-430b-a840-0053a9db7df9"),
+            new Guid("f588aa47-99b3-464c-bc02-006a15795bce"),
+            new Guid("be157226-9d1e-40a6-bcc8-0099b9c95d76")
+        };
 
         [SetUp]
         public void Setup()
@@ -41,12 +48,9 @@ namespace UnitTest
             {
                 PageIndex = 0,
                 TotalPage = 1,
-                Results = new List<CharacteristicDto>
-                {
-                    GetExpectedCharacteristic()
-                }
+                Results = GetExpectedCharacteristics()
             };
-            var actualResult = _charService.GetAllCharacteristic(Guid.Empty, 0, 1);
+            var actualResult = _charService.GetAllCharacteristic(Guid.Empty, 0, 5);
 
             AssertObjectsAreEqual(expectedResult, actualResult);
         }
@@ -74,12 +78,12 @@ namespace UnitTest
         {
             var charItemDto = new CharacteristicDto
             {
-                LocationId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                TypeId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                SpeciesId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                StatusId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                GenderId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                OriginId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
+                LocationId = GUIDS[0],
+                TypeId = GUIDS[0],
+                SpeciesId = GUIDS[0],
+                StatusId = GUIDS[0],
+                GenderId = GUIDS[0],
+                OriginId = GUIDS[0],
                 Name = "Test Create Characteristic",
                 Url = "Test Url",
                 Image = "Test Image",
@@ -107,48 +111,62 @@ namespace UnitTest
             
             genders = new List<GenderItem>
             {
-                new GenderItem { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Gender = "Male", Created = _currentTime },
-                new GenderItem { Id = new Guid("f588aa47-99b3-464c-bc02-006a15795bce"), Gender = "Female", Created = _currentTime },
+                new GenderItem { Id = GUIDS[0], Gender = "Male", Created = _currentTime },
+                new GenderItem { Id = GUIDS[1], Gender = "Female", Created = _currentTime },
             };
             locations = new List<Location> {
-                new Location { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Name = "Location_test1", Created = _currentTime },
-                new Location { Id = new Guid("f588aa47-99b3-464c-bc02-006a15795bce"), Name = "Location_test2", Created = _currentTime },
-                new Location { Id = new Guid("be157226-9d1e-40a6-bcc8-0099b9c95d76"), Name = "Location_test3", Created = _currentTime }
+                new Location { Id = GUIDS[0], Name = "Location_test1", Created = _currentTime },
+                new Location { Id = GUIDS[1], Name = "Location_test2", Created = _currentTime },
+                new Location { Id = GUIDS[2], Name = "Location_test3", Created = _currentTime }
             };
             origins = new List<Origin> {
-                new Origin { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Name = "Origin_test1", Created = _currentTime },
-                new Origin { Id = new Guid("f588aa47-99b3-464c-bc02-006a15795bce"), Name = "Origin_test2", Created = _currentTime },
-                new Origin { Id = new Guid("be157226-9d1e-40a6-bcc8-0099b9c95d76"), Name = "Origin_test3", Created = _currentTime }
+                new Origin { Id = GUIDS[0], Name = "Origin_test1", Created = _currentTime },
+                new Origin { Id = GUIDS[1], Name = "Origin_test2", Created = _currentTime },
+                new Origin { Id = GUIDS[2], Name = "Origin_test3", Created = _currentTime }
             };
             statuses = new List<StatusItem>
             {
-                new StatusItem { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Status = "Alive", Created = _currentTime },
+                new StatusItem { Id = GUIDS[0], Status = "Alive", Created = _currentTime },
             };
             specieses = new List<SpeciesItem>
             {
-                new SpeciesItem { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Species = "Human", Created = _currentTime },
+                new SpeciesItem { Id = GUIDS[0], Species = "Human", Created = _currentTime },
             };
             types = new List<TypeItem>
             {
-                new TypeItem { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Type = "Cat Person", Created = _currentTime },
+                new TypeItem { Id = GUIDS[0], Type = "Cat Person", Created = _currentTime },
             };
             episodes = new List<Episode>
             {
-                new Episode { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), CharacteristicId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), EpisodeUrl = "Test Episode", Created = _currentTime }
+                new Episode { Id = GUIDS[0], CharacteristicId = GUIDS[0], EpisodeUrl = "Test Episode", Created = _currentTime }
             };
 
             var characteristics = new List<Characteristic>
             {
                 new Characteristic
                 {
-                    Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
+                    Id = GUIDS[0],
                     Name = "Test",
-                    LocationId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                    SpeciesId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                    GenderId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                    TypeId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                    OriginId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                    StatusId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
+                    LocationId = GUIDS[0],
+                    SpeciesId = GUIDS[0],
+                    GenderId = GUIDS[0],
+                    TypeId = GUIDS[0],
+                    OriginId = GUIDS[0],
+                    StatusId = GUIDS[0],
+                    Url = "Url",
+                    Image = "Image",
+                    Created = _currentTime
+                },
+                new Characteristic
+                {
+                    Id = GUIDS[1],
+                    Name = "Test2",
+                    LocationId = GUIDS[1],
+                    SpeciesId = GUIDS[0],
+                    GenderId = GUIDS[0],
+                    TypeId = GUIDS[0],
+                    OriginId = GUIDS[0],
+                    StatusId = GUIDS[0],
                     Url = "Url",
                     Image = "Image",
                     Created = _currentTime
@@ -162,8 +180,11 @@ namespace UnitTest
             _unitOfWork.Setup(x => x.Origin.Query()).Returns(() => origins.AsQueryable());
             _unitOfWork.Setup(x => x.Status.Query()).Returns(() => statuses.AsQueryable());
             _unitOfWork.Setup(x => x.Characteristic.Add(It.IsAny<Characteristic>())).Verifiable();
+            _unitOfWork.Setup(x => x.Episode.Add(It.IsAny<Episode>())).Verifiable();
 
-            _unitOfWork.Setup(x => x.Location.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => locations[0]);
+            _unitOfWork.SetupSequence(x => x.Location.GetByIdOrDefault(It.IsAny<Guid?>()))
+                .Returns(() => locations[0])
+                .Returns(() => locations[1]);
             _unitOfWork.Setup(x => x.Species.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => specieses[0]);
             _unitOfWork.Setup(x => x.Gender.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => genders[0]);
             _unitOfWork.Setup(x => x.Type.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => types[0]);
@@ -175,29 +196,54 @@ namespace UnitTest
             _unitOfWork.Setup(x => x.Characteristic.Query()).Returns(() => characteristics.AsQueryable());
         }
 
-        private CharacteristicDto GetExpectedCharacteristic()
+        private List<CharacteristicDto> GetExpectedCharacteristics()
         {
-            return new CharacteristicDto
+            return new List<CharacteristicDto>
             {
-                Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                No = 1,
-                Name = "Test",
-                LocationId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                LocationItem = new LocationDto { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Name = "Location_test1" },
-                SpeciesId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                SpeciesItem = new SpeciesItemDto { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Species = "Human" },
-                GenderId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                GenderItem = new GenderItemDto { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Gender = "Male" },
-                TypeId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                TypeItem = new TypeItemDto { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Type = "Cat Person" },
-                OriginId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                OriginItem = new OriginDto { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Name = "Origin_test1" },
-                StatusId = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"),
-                StatusItem = new StatusItemDto { Id = new Guid("fd7a1d06-4e19-41a3-a335-00014185348b"), Status = "Alive" },
-                Episodes = new List<EpisodeDto> { new EpisodeDto { EpisodeUrl = "Test Episode" } },
-                Url = "Url",
-                Image = "Image",
-                Created = _currentTime
+                new CharacteristicDto
+                {
+                    Id = GUIDS[0],
+                    No = 1,
+                    Name = "Test",
+                    LocationId = GUIDS[0],
+                    LocationItem = new LocationDto { Id = GUIDS[0], Name = "Location_test1" },
+                    SpeciesId = GUIDS[0],
+                    SpeciesItem = new SpeciesItemDto { Id = GUIDS[0], Species = "Human" },
+                    GenderId = GUIDS[0],
+                    GenderItem = new GenderItemDto { Id = GUIDS[0], Gender = "Male" },
+                    TypeId = GUIDS[0],
+                    TypeItem = new TypeItemDto { Id = GUIDS[0], Type = "Cat Person" },
+                    OriginId = GUIDS[0],
+                    OriginItem = new OriginDto { Id = GUIDS[0], Name = "Origin_test1" },
+                    StatusId = GUIDS[0],
+                    StatusItem = new StatusItemDto { Id = GUIDS[0], Status = "Alive" },
+                    Episodes = new List<EpisodeDto> { new EpisodeDto { EpisodeUrl = "Test Episode" } },
+                    Url = "Url",
+                    Image = "Image",
+                    Created = _currentTime
+                },
+                new CharacteristicDto
+                {
+                    Id = GUIDS[1],
+                    No = 2,
+                    Name = "Test2",
+                    LocationId = GUIDS[1],
+                    LocationItem = new LocationDto { Id = GUIDS[1], Name = "Location_test2" },
+                    SpeciesId = GUIDS[0],
+                    SpeciesItem = new SpeciesItemDto { Id = GUIDS[0], Species = "Human" },
+                    GenderId = GUIDS[0],
+                    GenderItem = new GenderItemDto { Id = GUIDS[0], Gender = "Male" },
+                    TypeId = GUIDS[0],
+                    TypeItem = new TypeItemDto { Id = GUIDS[0], Type = "Cat Person" },
+                    OriginId = GUIDS[0],
+                    OriginItem = new OriginDto { Id = GUIDS[0], Name = "Origin_test1" },
+                    StatusId = GUIDS[0],
+                    StatusItem = new StatusItemDto { Id = GUIDS[0], Status = "Alive" },
+                    Episodes = new List<EpisodeDto> { new EpisodeDto { EpisodeUrl = "Test Episode" } },
+                    Url = "Url",
+                    Image = "Image",
+                    Created = _currentTime
+                }
             };
         }
 
@@ -205,9 +251,9 @@ namespace UnitTest
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Text = "Location_test1", Value = "fd7a1d06-4e19-41a3-a335-00014185348b" },
-                new SelectListItem { Text = "Location_test2", Value = "f588aa47-99b3-464c-bc02-006a15795bce" },
-                new SelectListItem { Text = "Location_test3", Value = "be157226-9d1e-40a6-bcc8-0099b9c95d76" }
+                new SelectListItem { Text = "Location_test1", Value = GUIDS[0].ToString() },
+                new SelectListItem { Text = "Location_test2", Value = GUIDS[1].ToString() },
+                new SelectListItem { Text = "Location_test3", Value = GUIDS[2].ToString() }
             };
         }
 
@@ -215,8 +261,8 @@ namespace UnitTest
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Text = "Male", Value = "fd7a1d06-4e19-41a3-a335-00014185348b" },
-                new SelectListItem { Text = "Female", Value = "f588aa47-99b3-464c-bc02-006a15795bce" }
+                new SelectListItem { Text = "Male", Value = GUIDS[0].ToString() },
+                new SelectListItem { Text = "Female", Value = GUIDS[1].ToString() }
             };
         }
 
@@ -224,9 +270,9 @@ namespace UnitTest
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Text = "Origin_test1", Value = "fd7a1d06-4e19-41a3-a335-00014185348b" },
-                new SelectListItem { Text = "Origin_test2", Value = "f588aa47-99b3-464c-bc02-006a15795bce" },
-                new SelectListItem { Text = "Origin_test3", Value = "be157226-9d1e-40a6-bcc8-0099b9c95d76" }
+                new SelectListItem { Text = "Origin_test1", Value = GUIDS[0].ToString() },
+                new SelectListItem { Text = "Origin_test2", Value = GUIDS[1].ToString() },
+                new SelectListItem { Text = "Origin_test3", Value = GUIDS[2].ToString() }
             };
         }
 
@@ -234,7 +280,7 @@ namespace UnitTest
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Text = "Cat Person", Value = "fd7a1d06-4e19-41a3-a335-00014185348b" }
+                new SelectListItem { Text = "Cat Person", Value = GUIDS[0].ToString() }
             };
         }
 
@@ -242,7 +288,7 @@ namespace UnitTest
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Text = "Alive", Value = "fd7a1d06-4e19-41a3-a335-00014185348b" }
+                new SelectListItem { Text = "Alive", Value = GUIDS[0].ToString() }
             };
         }
 
@@ -250,7 +296,7 @@ namespace UnitTest
         {
             return new List<SelectListItem>
             {
-                new SelectListItem { Text = "Human", Value = "fd7a1d06-4e19-41a3-a335-00014185348b" }
+                new SelectListItem { Text = "Human", Value = GUIDS[0].ToString() }
             };
         }
 
