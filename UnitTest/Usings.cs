@@ -1,0 +1,10 @@
+﻿global using NUnit.Framework;
+global using System;
+global using Domain.Entities;
+global using DataAccessEF;
+global using Microsoft.AspNetCore.Mvc.Rendering;
+global using Moq;
+global using Services;
+global using Domain.Interfaces;
+global using Dto;
+global using Newtonsoft.Json;

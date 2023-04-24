@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using MinimalApi.Endpoint.Configurations.Extensions;
 using Services;
-using Services.Implementation;
 using Services.Interfaces;
 
 namespace TheWebApplication;

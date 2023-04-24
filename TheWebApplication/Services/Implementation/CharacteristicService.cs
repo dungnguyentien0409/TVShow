@@ -8,7 +8,7 @@ using Dto;
 using Entities = Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Services.Implementation
+namespace Services
 {
 	public class CharacteristicService : ICharacteristicService
 	{
