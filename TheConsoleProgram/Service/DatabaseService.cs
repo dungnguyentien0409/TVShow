@@ -11,31 +11,41 @@ namespace Service
 		TVShowContext _context;
 		UnitOfWork _unitOfWork;
         string _endpoint;
-        public const string ALIVE_STATUS = "Alive";
+        static string ALIVE_STATUS = "Alive";
+        IRemoteDataHelper<Characteristic> _remoteDataHelper;
 
         public DatabaseService(TVShowContext context, string endpoint)
 		{
 			_context = context;
 			_unitOfWork = new UnitOfWork(context);
             _endpoint = endpoint;
+            _remoteDataHelper = new RemoteDataHelper<Characteristic>();
 		}
 
         public void ImportToDatabase()
         {
             var currentUrl = _endpoint;
 
-            CleanUpData();
-
-            while (!string.IsNullOrEmpty(currentUrl))
+            try
             {
-                var remoteDataResponse = RemoteDataHelper.GetAndParseData(currentUrl);
-                currentUrl = remoteDataResponse.Info.Next;
+                CleanUpData();
 
-                if (remoteDataResponse.Results.Count == 0) continue;
+                while (!string.IsNullOrEmpty(currentUrl))
+                {
+                    var remoteDataResponse = _remoteDataHelper.GetAndParseData(currentUrl);
+                    currentUrl = remoteDataResponse.Info.Next;
 
-                remoteDataResponse = RemoteDataHelper.FilterDataByStatus(remoteDataResponse, ALIVE_STATUS);
+                    if (remoteDataResponse.Results.Count == 0) continue;
 
-                ImportCurrentBatchToDatabase(remoteDataResponse.Results);
+                    var characteristicData = remoteDataResponse.Results
+                        .Where(w => w.Status == ALIVE_STATUS)
+                        .ToList();
+                    ImportCurrentBatchToDatabase(characteristicData);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error when importing data: " + ex.Message);
             }
         }
 

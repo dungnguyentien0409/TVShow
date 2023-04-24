@@ -21,12 +21,14 @@ public class CharacteristicController : Controller
 {
     private readonly IMapper _mapper;
     private ICharacteristicService _charService;
+    private IConfiguration _config;
     private const int PAGE_SIZE = 5;
 
-    public CharacteristicController(ICharacteristicService charService, IMapper mapper)
+    public CharacteristicController(ICharacteristicService charService, IMapper mapper, IConfiguration config)
     {
         _charService = charService;
         _mapper = mapper;
+        _config = config;
     }
 
     [HttpGet]
@@ -40,13 +42,14 @@ public class CharacteristicController : Controller
 
     [HttpPost("characteristics")]
     [AddHeader("from-database", "true")]
-    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 5)]
+    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 0)]
     public IActionResult GetCharacteristicGrid([FromForm] CharacteristicGridViewModel request)
     {
         var index = request.PageIndex.HasValue ? Math.Max(request.PageIndex.Value, 0) : 0;
         var viewModel = new PagedResponse<List<CharacteristicViewModel>>();
+        var pageSize = _config.GetValue<int>("PageSize");
 
-        var result = _charService.GetAllCharacteristic(request.LocationId, index, PAGE_SIZE);
+        var result = _charService.GetAllCharacteristic(request.LocationId, index, pageSize);
         foreach (var dto in result.Results)
         {
             viewModel.Results.Add(_mapper.Map<CharacteristicViewModel>(dto));
