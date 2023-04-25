@@ -42,7 +42,7 @@ public class CharacteristicController : Controller
 
     [HttpPost("characteristics")]
     [AddHeader("from-database", "true")]
-    [RateLimiting(Name = "GetCharacteristicGrid", Minutes = 0)]
+    [RateLimitingAttributeFactory(Name = "GetCharacteristic")]
     public IActionResult GetCharacteristicGrid([FromForm] CharacteristicGridViewModel request)
     {
         var index = request.PageIndex.HasValue ? Math.Max(request.PageIndex.Value, 0) : 0;
@@ -70,7 +70,7 @@ public class CharacteristicController : Controller
     }
 
     [HttpPost("characteristic")]
-    [RateLimiting(Name = "GetCharacteristicGrid", IsCreated = true)]
+    [RateLimitingAttributeFactory(Name = "GetCharacteristic", IsCreating = true)]
     public IActionResult CreateCharacteristic([FromForm] CharacteristicViewModel viewModel)
     {
         var charDto = _mapper.Map<CharacteristicDto>(viewModel);

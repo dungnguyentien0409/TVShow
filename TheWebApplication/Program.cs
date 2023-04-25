@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Middleware;
 using MinimalApi.Endpoint.Configurations.Extensions;
 using Services;
 using Services.Interfaces;
@@ -38,6 +39,7 @@ public class Program
         builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
         builder.Services.AddSingleton(mapper);
 
+        builder.Services.AddScoped<RateLimitingAttribute>();
         builder.Services.AddTransient<ICharacteristicService, CharacteristicService>();
         builder.Services.AddSingleton<IRateLimitingCache, RateLimitingCache>();
         builder.Services.AddDbContext<TVShowContext>(options =>
