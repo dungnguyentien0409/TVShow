@@ -1,5 +1,11 @@
 # TVShow
 
+# How to run
+- Start Docker locally
+- cd to TVShow folder
+- docker compose build
+- docker compose up
+
 # The Console App
 - Create DB
 - Crawl data from endpoint: https://rickandmortyapi.com/api/character/
