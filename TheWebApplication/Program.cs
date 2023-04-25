@@ -36,7 +36,7 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Configuration.AddConfigurationFile("appsettings.json");
-        builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddSingleton(mapper);
 
         builder.Services.AddScoped<RateLimitingAttribute>();
