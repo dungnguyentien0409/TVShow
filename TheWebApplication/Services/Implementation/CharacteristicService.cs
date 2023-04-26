@@ -12,11 +12,11 @@ namespace Services
 {
 	public class CharacteristicService : ICharacteristicService
 	{
-        private readonly ILogger<CharacteristicController> _logger;
+        private readonly ILogger<CharacteristicService> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CharacteristicService(ILogger<CharacteristicController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public CharacteristicService(ILogger<CharacteristicService> logger, IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_logger = logger;
 			_unitOfWork = unitOfWork;
