@@ -38,7 +38,7 @@ namespace UnitTest
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));
             IMapper mapper = new Mapper(configuration);
 
-            _charService = new CharacteristicService(Mock.Of<ILogger<CharacteristicController>>(), _unitOfWork.Object, mapper);
+            _charService = new CharacteristicService(Mock.Of<ILogger<CharacteristicService>>(), _unitOfWork.Object, mapper);
         }
 
         [Test]
