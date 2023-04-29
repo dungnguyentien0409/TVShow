@@ -17,9 +17,7 @@ services:
         condition: service_started
     networks:
       - myappnetwork
-    restart: unless-stopped
      
-
   theconsoleprogram:
     image: ${DOCKER_REGISTRY-}theconsoleprogram
     build:

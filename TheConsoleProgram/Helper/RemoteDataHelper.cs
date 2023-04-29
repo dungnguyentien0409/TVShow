@@ -17,9 +17,9 @@ namespace Helper
                 var response = client.Send(webRequest);
 
                 using var reader = new StreamReader(response.Content.ReadAsStream());
-                var jsonResponse = reader.ReadToEnd();
+                var stringResponse = reader.ReadToEnd();
 
-                remoteDataResponse = JsonConvert.DeserializeObject<RemoteDataResponse<T>>(jsonResponse);
+                remoteDataResponse = JsonConvert.DeserializeObject<RemoteDataResponse<T>>(stringResponse);
 
                 if (remoteDataResponse == null) return new RemoteDataResponse<T>();
             }

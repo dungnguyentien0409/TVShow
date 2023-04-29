@@ -26,10 +26,16 @@
     <None Remove="TheWebApplication\" />
     <None Remove="TheWebApplication\Services\" />
     <None Remove="appsettings.json" />
+    <None Remove="TestData\" />
+    <None Remove="TheConsoleProgram\" />
+    <None Remove="TheConsoleProgram\Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TheWebApplication\" />
     <Folder Include="TheWebApplication\Services\" />
+    <Folder Include="TestData\" />
+    <Folder Include="TheConsoleProgram\" />
+    <Folder Include="TheConsoleProgram\Helper\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />

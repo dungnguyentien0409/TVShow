@@ -12,13 +12,13 @@ namespace UnitTest
 	{
         private Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private CharacteristicService _charService;
-        private List<GenderItem> genders;
-        private List<Location> locations;
-        private List<Origin> origins;
-        private List<StatusItem> statuses;
-        private List<SpeciesItem> specieses;
-        private List<TypeItem> types;
-        private List<Episode> episodes;
+        private List<GenderItem> _genders;
+        private List<Location> _locations;
+        private List<Origin> _origins;
+        private List<StatusItem> _statuses;
+        private List<SpeciesItem> _specieses;
+        private List<TypeItem> _types;
+        private List<Episode> _episodes;
         private DateTime _currentTime;
         private List<Guid> GUIDS = new List<Guid>
         {
@@ -123,34 +123,34 @@ namespace UnitTest
         private void InitData()
         {
             
-            genders = new List<GenderItem>
+            _genders = new List<GenderItem>
             {
                 new GenderItem { Id = GUIDS[0], Gender = "Male", Created = _currentTime },
                 new GenderItem { Id = GUIDS[1], Gender = "Female", Created = _currentTime },
             };
-            locations = new List<Location> {
+            _locations = new List<Location> {
                 new Location { Id = GUIDS[0], Name = "Location_test1", Created = _currentTime },
                 new Location { Id = GUIDS[1], Name = "Location_test2", Created = _currentTime },
                 new Location { Id = GUIDS[2], Name = "Location_test3", Created = _currentTime }
             };
-            origins = new List<Origin> {
+            _origins = new List<Origin> {
                 new Origin { Id = GUIDS[0], Name = "Origin_test1", Created = _currentTime },
                 new Origin { Id = GUIDS[1], Name = "Origin_test2", Created = _currentTime },
                 new Origin { Id = GUIDS[2], Name = "Origin_test3", Created = _currentTime }
             };
-            statuses = new List<StatusItem>
+            _statuses = new List<StatusItem>
             {
                 new StatusItem { Id = GUIDS[0], Status = "Alive", Created = _currentTime },
             };
-            specieses = new List<SpeciesItem>
+            _specieses = new List<SpeciesItem>
             {
                 new SpeciesItem { Id = GUIDS[0], Species = "Human", Created = _currentTime },
             };
-            types = new List<TypeItem>
+            _types = new List<TypeItem>
             {
                 new TypeItem { Id = GUIDS[0], Type = "Cat Person", Created = _currentTime },
             };
-            episodes = new List<Episode>
+            _episodes = new List<Episode>
             {
                 new Episode { Id = GUIDS[0], CharacteristicId = GUIDS[0], EpisodeUrl = "Test Episode", Created = _currentTime }
             };
@@ -187,24 +187,24 @@ namespace UnitTest
                 }
             };
 
-            _unitOfWork.Setup(x => x.Location.Query()).Returns(() => locations.AsQueryable());
-            _unitOfWork.Setup(x => x.Species.Query()).Returns(() => specieses.AsQueryable());
-            _unitOfWork.Setup(x => x.Gender.Query()).Returns(() => genders.AsQueryable());
-            _unitOfWork.Setup(x => x.Type.Query()).Returns(() => types.AsQueryable());
-            _unitOfWork.Setup(x => x.Origin.Query()).Returns(() => origins.AsQueryable());
-            _unitOfWork.Setup(x => x.Status.Query()).Returns(() => statuses.AsQueryable());
+            _unitOfWork.Setup(x => x.Location.Query()).Returns(() => _locations.AsQueryable());
+            _unitOfWork.Setup(x => x.Species.Query()).Returns(() => _specieses.AsQueryable());
+            _unitOfWork.Setup(x => x.Gender.Query()).Returns(() => _genders.AsQueryable());
+            _unitOfWork.Setup(x => x.Type.Query()).Returns(() => _types.AsQueryable());
+            _unitOfWork.Setup(x => x.Origin.Query()).Returns(() => _origins.AsQueryable());
+            _unitOfWork.Setup(x => x.Status.Query()).Returns(() => _statuses.AsQueryable());
             _unitOfWork.Setup(x => x.Characteristic.Add(It.IsAny<Characteristic>())).Verifiable();
             _unitOfWork.Setup(x => x.Episode.Add(It.IsAny<Episode>())).Verifiable();
 
             _unitOfWork.SetupSequence(x => x.Location.GetByIdOrDefault(It.IsAny<Guid?>()))
-                .Returns(() => locations[0])
-                .Returns(() => locations[1]);
-            _unitOfWork.Setup(x => x.Species.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => specieses[0]);
-            _unitOfWork.Setup(x => x.Gender.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => genders[0]);
-            _unitOfWork.Setup(x => x.Type.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => types[0]);
-            _unitOfWork.Setup(x => x.Origin.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => origins[0]);
-            _unitOfWork.Setup(x => x.Status.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => statuses[0]);
-            _unitOfWork.Setup(x => x.Episode.GetByCharacteristicId(It.IsAny<Guid>())).Returns(() => episodes.AsQueryable());
+                .Returns(() => _locations[0])
+                .Returns(() => _locations[1]);
+            _unitOfWork.Setup(x => x.Species.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => _specieses[0]);
+            _unitOfWork.Setup(x => x.Gender.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => _genders[0]);
+            _unitOfWork.Setup(x => x.Type.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => _types[0]);
+            _unitOfWork.Setup(x => x.Origin.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => _origins[0]);
+            _unitOfWork.Setup(x => x.Status.GetByIdOrDefault(It.IsAny<Guid?>())).Returns(() => _statuses[0]);
+            _unitOfWork.Setup(x => x.Episode.GetByCharacteristicId(It.IsAny<Guid>())).Returns(() => _episodes.AsQueryable());
 
 
             _unitOfWork.Setup(x => x.Characteristic.Query()).Returns(() => characteristics.AsQueryable());
